@@ -31,10 +31,10 @@ body {
   font-family:'DM Sans',system-ui,sans-serif;
   color:var(--ink);
   background:
-    radial-gradient(ellipse 1400px 700px at 20% -10%, rgba(255,255,255,0.9) 0%, transparent 60%),
-    radial-gradient(ellipse 900px 900px at 90% 30%, rgba(200,210,220,0.6) 0%, transparent 55%),
-    radial-gradient(ellipse 600px 400px at 10% 80%, rgba(220,228,235,0.7) 0%, transparent 50%),
-    linear-gradient(160deg, #F0F3F6 0%, #E4E9EE 35%, #D8DFE6 65%, #E8EDF2 100%);
+    radial-gradient(ellipse 1200px 600px at 15% -5%, rgba(255,255,255,0.95) 0%, transparent 55%),
+    radial-gradient(ellipse 1000px 800px at 85% 8%, rgba(214,224,232,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 900px 700px at 50% 112%, rgba(206,216,226,0.6) 0%, transparent 55%),
+    linear-gradient(160deg, #EEF2F6 0%, #E0E6EC 28%, #CFD8E0 52%, #DCE3EA 78%, #EFF3F7 100%);
   background-attachment: fixed;
   -webkit-font-smoothing:antialiased;
   line-height:1.5;
@@ -43,17 +43,26 @@ body {
   position:relative;
 }
 
-/* subtle grid texture */
+/* iluminação neon suave sobre o prateado */
 body::before {
   content:'';
   position:fixed;
   inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.4) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.4) 1px, transparent 1px);
-  background-size:60px 60px;
+  background:
+    radial-gradient(circle 560px at 10% 14%, rgba(24,165,88,0.18), transparent 68%),
+    radial-gradient(circle 520px at 92% 70%, rgba(34,194,101,0.15), transparent 68%),
+    radial-gradient(circle 640px at 72% 4%, rgba(120,180,255,0.12), transparent 70%),
+    radial-gradient(circle 480px at 30% 95%, rgba(140,200,255,0.10), transparent 70%);
   pointer-events:none;
   z-index:0;
+  animation:neonBreath 9s ease-in-out infinite;
+}
+@keyframes neonBreath {
+  0%,100% { opacity:.85; }
+  50%     { opacity:1; }
+}
+@media (prefers-reduced-motion: reduce){
+  body::before{ animation:none; }
 }
 
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
@@ -475,6 +484,75 @@ footer{
   .trust-item{padding:16px 22px}
   .search{min-width:100%}
 }
+/* ====== HERO GRID + SLIDER DE DESTAQUES ====== */
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:36px;
+  align-items:center;
+}
+@media(min-width:920px){
+  .hero-grid{grid-template-columns:1.05fr .95fr;gap:48px}
+}
+
+.hero-slider{
+  position:relative;z-index:1;
+  border-radius:24px;overflow:hidden;
+  aspect-ratio:1/1;   /* quadro mais alto — mude p/ 4/3 (mais baixo) ou 3/4 (bem alto) */
+  background:linear-gradient(135deg,#E2E8EE,#C8D3DC);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:var(--shadow-raised);
+}
+.hero-slider .slides{position:absolute;inset:0}
+.hero-slider .slides img{
+  position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;object-position:center top;display:block;
+  opacity:0;transform:scale(1.04);
+  transition:opacity .9s ease, transform 5s ease;
+}
+.hero-slider .slides img.active{opacity:1;transform:scale(1)}
+
+.slide-badge{
+  position:absolute;top:14px;right:14px;z-index:3;
+  font-family:'Barlow Condensed';font-weight:700;font-size:.72rem;
+  letter-spacing:.1em;text-transform:uppercase;color:#fff;
+  padding:6px 13px;border-radius:8px;
+  background:linear-gradient(135deg, rgba(24,165,88,.92), rgba(15,128,64,.95));
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 4px 12px var(--green-glow);
+  backdrop-filter:blur(6px);
+}
+
+.slide-nav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:42px;height:42px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(13,27,38,.45);color:#fff;border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(6px);
+  transition:background .2s, transform .2s;
+}
+.slide-nav:hover{background:rgba(13,27,38,.75);transform:translateY(-50%) scale(1.06)}
+.slide-nav svg{width:20px;height:20px}
+.slide-nav.prev{left:12px}
+.slide-nav.next{right:12px}
+
+.slide-dots{
+  position:absolute;bottom:14px;left:0;right:0;z-index:3;
+  display:flex;justify-content:center;gap:8px;
+}
+.slide-dots button{
+  width:9px;height:9px;border-radius:50%;cursor:pointer;padding:0;
+  border:1px solid rgba(255,255,255,.7);
+  background:rgba(255,255,255,.35);
+  transition:all .25s;
+}
+.slide-dots button.active{
+  width:26px;border-radius:6px;
+  background:var(--green-grad);border-color:transparent;
+  box-shadow:0 2px 8px var(--green-glow);
+}
+
+.hero-slider.empty{display:none}
 </style>
 </head>
 <body>
@@ -498,18 +576,29 @@ footer{
 <main class="wrap">
   <section class="hero" id="topo">
     <div class="hero-bg-shape"></div>
-    <div class="hero-inner">
-      <span class="eyebrow">Seminovos selecionados · Recife-PE</span>
-      <h1>Seu próximo Seminovo<br>com <span class="grn">preço baixo</span><br>e <span class="met">papelada pronta</span>.</h1>
-      <p>Veículos revisados, conservados e com documentação pronta para transferir. Atendimento direto, sem enrolação.</p>
-      <div class="hero-cta">
-        <a class="btn btn-wpp" href="#estoque">Ver estoque</a>
-        <a class="btn btn-ghost" id="heroWpp" target="_blank" rel="noopener">Falar no WhatsApp</a>
+    <div class="hero-grid">
+      <div class="hero-inner">
+        <span class="eyebrow">Seminovos selecionados · Recife-PE</span>
+        <h1>Seu próximo Seminovo<br>com <span class="grn">preço baixo</span><br>e <span class="met">papelada pronta</span>.</h1>
+        <p>Veículos revisados, conservados e com documentação pronta para transferir. Atendimento direto, sem enrolação.</p>
+        <div class="hero-cta">
+          <a class="btn btn-wpp" href="#estoque">Ver estoque</a>
+          <a class="btn btn-ghost" id="heroWpp" target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
+        <div class="trust">
+          <div class="trust-item"><b id="tCount">—</b><span>veículos disponíveis</span></div>
+          <div class="trust-item"><b>100%</b><span>documentação ok</span></div>
+          <div class="trust-item"><b>Recife</b><span>PE · atendemos a região</span></div>
+        </div>
       </div>
-      <div class="trust">
-        <div class="trust-item"><b id="tCount">—</b><span>veículos disponíveis</span></div>
-        <div class="trust-item"><b>100%</b><span>documentação ok</span></div>
-        <div class="trust-item"><b>Recife</b><span>PE · atendemos a região</span></div>
+
+      <!-- SLIDER DE DESTAQUES: coloque as fotos na pasta "destaques/" (1.jpg, 2.jpg, ...) -->
+      <div class="hero-slider" id="heroSlider" aria-label="Destaques">
+        <div class="slides" id="slides"></div>
+        <span class="slide-badge">Destaques</span>
+        <button class="slide-nav prev" id="slidePrev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="slide-nav next" id="slideNext" aria-label="Próxima"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg></button>
+        <div class="slide-dots" id="slideDots"></div>
       </div>
     </div>
   </section>
@@ -721,6 +810,71 @@ document.getElementById('sort').addEventListener('change',applyFilters);
 const genericWa = waLink('um veículo do estoque','');
 ['navWpp','heroWpp','footWpp','fabWpp'].forEach(id=>document.getElementById(id).href=genericWa);
 document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* ===================== SLIDER DE DESTAQUES =====================
+   Procura fotos em destaques/1.jpg, 2.jpg, 3.jpg ... (também aceita
+   .jpeg, .png e .webp). É só jogar as imagens nessa pasta — não precisa
+   editar nada aqui. Ele para no primeiro número que não existir. */
+const DESTAQUES = { dir:'destaques/', exts:['jpg','jpeg','png','webp'], max:30, intervalo:4000 };
+
+function achaImagem(n){
+  return new Promise(resolve=>{
+    let i=0;
+    const tenta=()=>{
+      if(i>=DESTAQUES.exts.length){ resolve(null); return; }
+      const url = `${DESTAQUES.dir}${n}.${DESTAQUES.exts[i]}`;
+      const img = new Image();
+      img.onload  = ()=>resolve(url);
+      img.onerror = ()=>{ i++; tenta(); };
+      img.src = url;
+    };
+    tenta();
+  });
+}
+
+async function initDestaques(){
+  const slider   = document.getElementById('heroSlider');
+  const slidesEl = document.getElementById('slides');
+  const dotsEl   = document.getElementById('slideDots');
+
+  const urls = [];
+  for(let n=1; n<=DESTAQUES.max; n++){
+    const u = await achaImagem(n);
+    if(!u) break;                 // achou um "buraco" na numeração -> para
+    urls.push(u);
+  }
+  if(!urls.length){ slider.classList.add('empty'); return; } // sem fotos -> esconde o slider
+
+  slidesEl.innerHTML = urls.map((u,k)=>`<img src="${u}" alt="Destaque ${k+1}" class="${k===0?'active':''}">`).join('');
+  dotsEl.innerHTML   = urls.map((_,k)=>`<button class="${k===0?'active':''}" aria-label="Ir para ${k+1}"></button>`).join('');
+
+  const imgs = [...slidesEl.children];
+  const dots = [...dotsEl.children];
+  let cur = 0, timer = null;
+
+  function show(k){
+    cur = (k + imgs.length) % imgs.length;
+    imgs.forEach((im,j)=>im.classList.toggle('active', j===cur));
+    dots.forEach((d,j)=>d.classList.toggle('active', j===cur));
+  }
+  const stop  = ()=>{ if(timer){ clearInterval(timer); timer=null; } };
+  const start = ()=>{ if(imgs.length>1){ stop(); timer=setInterval(()=>show(cur+1), DESTAQUES.intervalo); } };
+
+  document.getElementById('slidePrev').onclick = ()=>{ show(cur-1); start(); };
+  document.getElementById('slideNext').onclick = ()=>{ show(cur+1); start(); };
+  dots.forEach((d,j)=> d.onclick = ()=>{ show(j); start(); });
+  slider.addEventListener('mouseenter', stop);   // pausa quando o mouse está em cima
+  slider.addEventListener('mouseleave', start);
+
+  if(imgs.length < 2){            // só 1 foto: sem setas nem bolinhas
+    document.getElementById('slidePrev').style.display = 'none';
+    document.getElementById('slideNext').style.display = 'none';
+    dotsEl.style.display = 'none';
+  }
+  start();
+}
+initDestaques();
+
 load();
 </script>
 </body>

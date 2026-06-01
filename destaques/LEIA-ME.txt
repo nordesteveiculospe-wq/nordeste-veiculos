@@ -1,0 +1,12 @@
+PASTA DE DESTAQUES — slider do topo do site
+============================================
+
+Como usar:
+1. Coloque suas fotos aqui, nomeadas em sequencia: 1.jpg, 2.jpg, 3.jpg, ...
+2. Pode usar .jpg, .jpeg, .png ou .webp.
+3. O site acha as fotos sozinho e monta o slider. Ele para no primeiro
+   numero que faltar (ex.: se tiver 1,2,3 e nao tiver o 4, mostra 3 fotos).
+4. As 3 imagens de exemplo (1.jpg, 2.jpg, 3.jpg) sao so para teste —
+   substitua pelas suas.
+
+Esta pasta deve ficar NA MESMA pasta do index.html, com o nome "destaques".
