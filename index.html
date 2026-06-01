@@ -592,7 +592,7 @@ footer{
         </div>
       </div>
 
-      <!-- SLIDER DE DESTAQUES: coloque as fotos na pasta "destaques/" (1.jpg, 2.jpg, ...) -->
+      <!-- SLIDER DE DESTAQUES: as fotos são gerenciadas pela página admin -->
       <div class="hero-slider" id="heroSlider" aria-label="Destaques">
         <div class="slides" id="slides"></div>
         <span class="slide-badge">Destaques</span>
@@ -812,37 +812,23 @@ const genericWa = waLink('um veículo do estoque','');
 document.getElementById('yr').textContent=new Date().getFullYear();
 
 /* ===================== SLIDER DE DESTAQUES =====================
-   Procura fotos em destaques/1.jpg, 2.jpg, 3.jpg ... (também aceita
-   .jpeg, .png e .webp). É só jogar as imagens nessa pasta — não precisa
-   editar nada aqui. Ele para no primeiro número que não existir. */
-const DESTAQUES = { dir:'destaques/', exts:['jpg','jpeg','png','webp'], max:30, intervalo:4000 };
-
-function achaImagem(n){
-  return new Promise(resolve=>{
-    let i=0;
-    const tenta=()=>{
-      if(i>=DESTAQUES.exts.length){ resolve(null); return; }
-      const url = `${DESTAQUES.dir}${n}.${DESTAQUES.exts[i]}`;
-      const img = new Image();
-      img.onload  = ()=>resolve(url);
-      img.onerror = ()=>{ i++; tenta(); };
-      img.src = url;
-    };
-    tenta();
-  });
-}
+   As fotos agora vêm do painel admin (banco de dados), via /api/destaques.
+   Para adicionar/remover, use a página admin — não precisa mexer aqui. */
+const DESTAQUES = { intervalo:4000 };
 
 async function initDestaques(){
   const slider   = document.getElementById('heroSlider');
   const slidesEl = document.getElementById('slides');
   const dotsEl   = document.getElementById('slideDots');
 
-  const urls = [];
-  for(let n=1; n<=DESTAQUES.max; n++){
-    const u = await achaImagem(n);
-    if(!u) break;                 // achou um "buraco" na numeração -> para
-    urls.push(u);
-  }
+  let urls = [];
+  try{
+    if(CONFIG.API_URL){
+      const r = await fetch(CONFIG.API_URL.replace(/\/$/,'')+'/api/destaques');
+      if(r.ok){ const lista = await r.json(); urls = (lista||[]).map(d=>d.url).filter(Boolean); }
+    }
+  }catch(e){ console.warn('Destaques indisponíveis', e); }
+
   if(!urls.length){ slider.classList.add('empty'); return; } // sem fotos -> esconde o slider
 
   slidesEl.innerHTML = urls.map((u,k)=>`<img src="${u}" alt="Destaque ${k+1}" class="${k===0?'active':''}">`).join('');

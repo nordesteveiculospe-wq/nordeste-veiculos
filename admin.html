@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin · Nordeste Multimarcas</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#18A558; --green-d:#0F8040; --green-grad:linear-gradient(135deg,#22C265 0%,#0F8040 100%);
+  --green-glow:rgba(24,165,88,.3);
+  --ink:#0D1B26; --muted:#5A6872; --line:rgba(160,175,190,.3);
+  --bg:#EEF2F6; --card:#fff; --radius:14px; --red:#D64545;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);background:
+  radial-gradient(circle 500px at 12% 12%,rgba(24,165,88,.10),transparent 70%),
+  radial-gradient(circle 500px at 90% 80%,rgba(120,180,255,.10),transparent 70%),
+  linear-gradient(160deg,#EEF2F6,#DCE3EA);min-height:100vh;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.02em}
+.wrap{max-width:1080px;margin:0 auto;padding:24px}
+.btn{font-family:'Barlow Condensed';font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  border:0;border-radius:10px;padding:11px 18px;cursor:pointer;font-size:.95rem;transition:.2s;white-space:nowrap}
+.btn-green{background:var(--green-grad);color:#fff;box-shadow:0 4px 14px var(--green-glow)}
+.btn-green:hover{transform:translateY(-1px)}
+.btn-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{background:#f5f7f9}
+.btn-red{background:#fff;border:1px solid rgba(214,69,69,.4);color:var(--red)}
+.btn-red:hover{background:var(--red);color:#fff}
+.btn-sm{padding:7px 12px;font-size:.82rem}
+input,select,textarea{font-family:'DM Sans';font-size:.95rem;width:100%;padding:11px 13px;
+  border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);outline:0}
+input:focus,select:focus,textarea:focus{border-color:var(--green)}
+label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin:0 0 5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 4px 18px rgba(0,0,0,.06)}
+
+/* LOGIN */
+#login{max-width:380px;margin:12vh auto 0;padding:34px 28px;text-align:center}
+#login h1{font-size:1.7rem;margin-bottom:6px}
+#login p{color:var(--muted);font-size:.9rem;margin-bottom:22px}
+#login .row{margin-bottom:14px;text-align:left}
+.hide{display:none!important}
+
+/* HEADER */
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px}
+.top h1{font-size:1.6rem}
+.top .badge{font-size:.7rem;background:var(--green-grad);color:#fff;padding:3px 9px;border-radius:6px;vertical-align:middle;margin-left:8px}
+
+/* TABS */
+.tabs{display:flex;gap:8px;margin-bottom:18px}
+.tab{font-family:'Barlow Condensed';font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+  padding:9px 18px;border-radius:10px;cursor:pointer;background:#fff;border:1px solid var(--line);color:var(--muted)}
+.tab.active{background:var(--green-grad);color:#fff;border-color:transparent;box-shadow:0 4px 14px var(--green-glow)}
+
+/* LISTA CARROS */
+.list{display:flex;flex-direction:column;gap:10px}
+.item{display:flex;align-items:center;gap:14px;padding:12px;}
+.item img{width:84px;height:64px;object-fit:cover;border-radius:8px;background:#dde3ea;flex:none}
+.item .info{flex:1;min-width:0}
+.item .info b{font-family:'Barlow Condensed';font-size:1.05rem;display:block;line-height:1.2}
+.item .info span{font-size:.82rem;color:var(--muted)}
+.item .acts{display:flex;gap:7px;flex-wrap:wrap}
+.pill{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:6px;display:inline-block}
+.pill.on{background:rgba(24,165,88,.14);color:var(--green-d)}
+.pill.off{background:rgba(214,69,69,.14);color:var(--red)}
+
+/* FORM */
+#carForm{padding:22px;margin-bottom:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.row{margin-bottom:14px}
+@media(max-width:600px){.grid2,.grid3{grid-template-columns:1fr}}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.thumb{position:relative;width:74px;height:56px;border-radius:8px;overflow:hidden;background:#dde3ea}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb button{position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;border:0;
+  background:rgba(13,27,38,.75);color:#fff;cursor:pointer;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center}
+
+/* DESTAQUES */
+#dstGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px}
+.dst{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1/1;background:#dde3ea;border:1px solid var(--line)}
+.dst img{width:100%;height:100%;object-fit:cover}
+.dst .num{position:absolute;top:6px;left:6px;background:var(--green-grad);color:#fff;font-weight:700;
+  font-size:.72rem;padding:2px 8px;border-radius:6px}
+.dst .del{position:absolute;top:6px;right:6px;width:24px;height:24px;border:0;border-radius:50%;
+  background:rgba(13,27,38,.78);color:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+
+.muted{color:var(--muted);font-size:.88rem}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.section-title h2{font-size:1.3rem}
+
+/* TOAST */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:.9rem;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);transition:.3s;z-index:200;max-width:90vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast.err{background:var(--red)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);
+  border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div id="login" class="card">
+  <h1>Painel Admin</h1>
+  <p>Nordeste Multimarcas</p>
+  <div class="row">
+    <label>Senha</label>
+    <input id="senha" type="password" placeholder="Digite a senha" onkeydown="if(event.key==='Enter')entrar()" />
+  </div>
+  <button class="btn btn-green" style="width:100%" id="btnEntrar" onclick="entrar()">Entrar</button>
+  <p id="loginErr" class="hide" style="color:var(--red);margin-top:12px">Senha incorreta.</p>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" class="wrap hide">
+  <div class="top">
+    <h1>Painel <span class="badge">Admin</span></h1>
+    <button class="btn btn-ghost btn-sm" onclick="sair()">Sair</button>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" id="tabCarros" onclick="mostrar('carros')">Veículos</div>
+    <div class="tab" id="tabDestaques" onclick="mostrar('destaques')">Destaques</div>
+  </div>
+
+  <!-- ===== CARROS ===== -->
+  <div id="viewCarros">
+    <div class="section-title">
+      <h2>Estoque</h2>
+      <button class="btn btn-green btn-sm" onclick="novoCarro()">+ Adicionar veículo</button>
+    </div>
+
+    <!-- formulário (escondido até clicar em adicionar/editar) -->
+    <div id="carForm" class="card hide">
+      <h3 id="formTitulo" style="margin-bottom:16px">Novo veículo</h3>
+      <input type="hidden" id="f_id" />
+      <div class="row"><label>Título *</label><input id="f_titulo" placeholder="Ex: Jeep Compass Longitude 2023" /></div>
+      <div class="grid3">
+        <div class="row"><label>Preço (R$) *</label><input id="f_preco" type="number" placeholder="80990" /></div>
+        <div class="row"><label>Ano *</label><input id="f_ano" type="number" placeholder="2023" /></div>
+        <div class="row"><label>KM</label><input id="f_km" type="number" placeholder="59000" /></div>
+      </div>
+      <div class="grid2">
+        <div class="row"><label>Câmbio</label>
+          <select id="f_cambio"><option>Automático</option><option>Manual</option></select></div>
+        <div class="row"><label>Combustível</label>
+          <select id="f_combustivel"><option>Flex</option><option>Gasolina</option><option>Diesel</option><option>Híbrido</option><option>Elétrico</option></select></div>
+      </div>
+      <div class="row"><label>Descrição</label><textarea id="f_descricao" rows="3" placeholder="Detalhes do veículo..."></textarea></div>
+      <div class="row"><label>Link do OLX (opcional)</label><input id="f_olx" placeholder="https://..." /></div>
+      <div class="row"><label><input type="checkbox" id="f_disponivel" checked style="width:auto;margin-right:6px;vertical-align:-1px">Disponível (desmarque para "Vendido")</label></div>
+      <div class="row">
+        <label>Fotos (pode selecionar várias)</label>
+        <input id="f_fotos" type="file" accept="image/*" multiple />
+        <div class="thumbs" id="f_thumbs"></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button class="btn btn-green" id="btnSalvar" onclick="salvarCarro()">Salvar</button>
+        <button class="btn btn-ghost" onclick="fecharForm()">Cancelar</button>
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px"><div class="list" id="listaCarros"><p class="muted" style="padding:12px">Carregando…</p></div></div>
+  </div>
+
+  <!-- ===== DESTAQUES ===== -->
+  <div id="viewDestaques" class="hide">
+    <div class="section-title">
+      <h2>Slider de destaques</h2>
+      <label class="btn btn-green btn-sm" style="cursor:pointer;margin:0">
+        + Subir fotos
+        <input id="dstFile" type="file" accept="image/*" multiple class="hide" onchange="subirDestaques(this.files)">
+      </label>
+    </div>
+    <p class="muted">As fotos entram na ordem em que aparecem aqui (o número é a posição no slider).</p>
+    <div class="card" style="padding:16px;margin-top:12px">
+      <div id="dstGrid"><p class="muted">Carregando…</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ===================== CONFIG ===================== */
+const API = "https://nordeste-backend.onrender.com";
+let SENHA = "";                 // guardada só em memória (sai ao recarregar a página)
+let novasFotos = [];            // {url, public_id} das fotos já enviadas neste formulário
+
+/* ===================== HELPERS ===================== */
+const $ = id => document.getElementById(id);
+function toast(msg, erro){ const t=$('toast'); t.textContent=msg; t.className='show'+(erro?' err':''); setTimeout(()=>t.className='',3000); }
+function brl(n){ return Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}); }
+
+async function api(path, opts={}){
+  opts.headers = Object.assign({}, opts.headers, { 'x-admin-password': SENHA });
+  const r = await fetch(API+path, opts);
+  if(r.status===401){ toast('Sessão expirada — faça login de novo.', true); sair(); throw new Error('401'); }
+  return r;
+}
+async function apiJSON(path, method, body){
+  const r = await api(path, { method, headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  const data = await r.json();
+  if(!r.ok) throw new Error(data.error || 'Erro');
+  return data;
+}
+
+/* ===================== LOGIN ===================== */
+async function entrar(){
+  const senha = $('senha').value;
+  if(!senha) return;
+  $('btnEntrar').innerHTML = '<span class="spin"></span>Entrando...';
+  try{
+    const r = await fetch(API+'/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({senha})});
+    if(r.ok){
+      SENHA = senha;
+      $('login').classList.add('hide'); $('app').classList.remove('hide');
+      carregarCarros(); carregarDestaques();
+    } else {
+      $('loginErr').classList.remove('hide');
+    }
+  }catch(e){ toast('Erro de conexão com o servidor.', true); }
+  $('btnEntrar').textContent='Entrar';
+}
+function sair(){ SENHA=''; $('app').classList.add('hide'); $('login').classList.remove('hide'); $('senha').value=''; }
+
+/* ===================== NAVEGAÇÃO ===================== */
+function mostrar(qual){
+  const c = qual==='carros';
+  $('viewCarros').classList.toggle('hide',!c);
+  $('viewDestaques').classList.toggle('hide',c);
+  $('tabCarros').classList.toggle('active',c);
+  $('tabDestaques').classList.toggle('active',!c);
+}
+
+/* ===================== UPLOAD CLOUDINARY ===================== */
+async function enviarFotos(files, folder){
+  const fd = new FormData();
+  fd.append('folder', folder);
+  [...files].forEach(f => fd.append('fotos', f));
+  const r = await api('/api/upload', { method:'POST', body: fd });  // NÃO setar Content-Type (multipart automático)
+  const data = await r.json();
+  if(!r.ok) throw new Error(data.error||'Erro no upload');
+  return data.fotos; // [{url, public_id}]
+}
+function slug(t){ return (t||'carro').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+  .replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,40) + '-' + Date.now().toString().slice(-5); }
+
+/* ===================== CARROS ===================== */
+let CARROS = [];
+async function carregarCarros(){
+  try{
+    const r = await fetch(API+'/api/carros'); CARROS = await r.json();
+    $('listaCarros').innerHTML = CARROS.length ? CARROS.map(c=>`
+      <div class="item">
+        <img src="${(c.imagens&&c.imagens[0])||''}" onerror="this.style.visibility='hidden'">
+        <div class="info">
+          <b>${c.titulo}</b>
+          <span>${brl(c.preco)} · ${c.ano} · ${(c.km||0).toLocaleString('pt-BR')} km
+          <span class="pill ${c.disponivel===false?'off':'on'}">${c.disponivel===false?'Vendido':'Disponível'}</span></span>
+        </div>
+        <div class="acts">
+          <button class="btn btn-ghost btn-sm" onclick="toggleVendido('${c._id}')">${c.disponivel===false?'Marcar disponível':'Marcar vendido'}</button>
+          <button class="btn btn-ghost btn-sm" onclick="editarCarro('${c._id}')">Editar</button>
+          <button class="btn btn-red btn-sm" onclick="excluirCarro('${c._id}','${c.titulo.replace(/'/g,"")}')">Excluir</button>
+        </div>
+      </div>`).join('') : '<p class="muted" style="padding:12px">Nenhum veículo cadastrado ainda.</p>';
+  }catch(e){ $('listaCarros').innerHTML='<p class="muted" style="padding:12px">Erro ao carregar.</p>'; }
+}
+
+function novoCarro(){
+  $('formTitulo').textContent='Novo veículo';
+  $('f_id').value=''; $('f_titulo').value=''; $('f_preco').value=''; $('f_ano').value='';
+  $('f_km').value=''; $('f_cambio').value='Automático'; $('f_combustivel').value='Flex';
+  $('f_descricao').value=''; $('f_olx').value=''; $('f_disponivel').checked=true;
+  $('f_fotos').value=''; novasFotos=[]; renderThumbs();
+  $('carForm').classList.remove('hide'); window.scrollTo({top:0,behavior:'smooth'});
+}
+function editarCarro(id){
+  const c = CARROS.find(x=>x._id===id); if(!c) return;
+  $('formTitulo').textContent='Editar veículo';
+  $('f_id').value=c._id; $('f_titulo').value=c.titulo; $('f_preco').value=c.preco; $('f_ano').value=c.ano;
+  $('f_km').value=c.km||''; $('f_cambio').value=c.cambio||'Automático'; $('f_combustivel').value=c.combustivel||'Flex';
+  $('f_descricao').value=c.descricao||''; $('f_olx').value=c.url_olx||''; $('f_disponivel').checked=c.disponivel!==false;
+  $('f_fotos').value='';
+  novasFotos = (c.imagens||[]).map((u,i)=>({url:u, public_id:(c.public_ids&&c.public_ids[i])||''}));
+  renderThumbs();
+  $('carForm').classList.remove('hide'); window.scrollTo({top:0,behavior:'smooth'});
+}
+function fecharForm(){ $('carForm').classList.add('hide'); }
+function renderThumbs(){
+  $('f_thumbs').innerHTML = novasFotos.map((f,i)=>`<div class="thumb"><img src="${f.url}"><button onclick="removerFoto(${i})">×</button></div>`).join('');
+}
+function removerFoto(i){ novasFotos.splice(i,1); renderThumbs(); }
+
+async function salvarCarro(){
+  const titulo=$('f_titulo').value.trim(), preco=+$('f_preco').value, ano=+$('f_ano').value;
+  if(!titulo||!preco||!ano){ toast('Preencha título, preço e ano.', true); return; }
+  $('btnSalvar').innerHTML='<span class="spin"></span>Salvando...'; $('btnSalvar').disabled=true;
+  try{
+    // 1) sobe fotos novas (as que vêm do input file)
+    const files = $('f_fotos').files;
+    if(files.length){
+      const enviadas = await enviarFotos(files, 'carros/'+slug(titulo));
+      novasFotos = novasFotos.concat(enviadas);
+    }
+    // 2) monta o carro
+    const carro = {
+      titulo, preco, ano, km:+$('f_km').value||0,
+      cambio:$('f_cambio').value, combustivel:$('f_combustivel').value,
+      descricao:$('f_descricao').value.trim(), url_olx:$('f_olx').value.trim(),
+      disponivel:$('f_disponivel').checked,
+      imagens: novasFotos.map(f=>f.url),
+      public_ids: novasFotos.map(f=>f.public_id),
+    };
+    const id = $('f_id').value;
+    if(id) await apiJSON('/api/carros/'+id,'PUT',carro);
+    else   await apiJSON('/api/carros','POST',carro);
+    toast('Veículo salvo!'); fecharForm(); carregarCarros();
+  }catch(e){ toast(e.message||'Erro ao salvar.', true); }
+  $('btnSalvar').textContent='Salvar'; $('btnSalvar').disabled=false;
+}
+async function toggleVendido(id){
+  const c=CARROS.find(x=>x._id===id); if(!c) return;
+  try{ await apiJSON('/api/carros/'+id,'PUT',{disponivel: c.disponivel===false}); carregarCarros(); }
+  catch(e){ toast(e.message,true); }
+}
+async function excluirCarro(id,titulo){
+  if(!confirm('Excluir "'+titulo+'"? Isso também apaga as fotos.')) return;
+  try{ await api('/api/carros/'+id,{method:'DELETE'}); toast('Veículo excluído.'); carregarCarros(); }
+  catch(e){ toast('Erro ao excluir.',true); }
+}
+
+/* ===================== DESTAQUES ===================== */
+async function carregarDestaques(){
+  try{
+    const r = await fetch(API+'/api/destaques'); const lista = await r.json();
+    $('dstGrid').innerHTML = lista.length ? lista.map((d,i)=>`
+      <div class="dst">
+        <span class="num">${i+1}</span>
+        <img src="${d.url}">
+        <button class="del" onclick="excluirDestaque('${d._id}')">×</button>
+      </div>`).join('') : '<p class="muted">Nenhuma foto de destaque ainda. Use o botão "Subir fotos".</p>';
+  }catch(e){ $('dstGrid').innerHTML='<p class="muted">Erro ao carregar.</p>'; }
+}
+async function subirDestaques(files){
+  if(!files.length) return;
+  toast('Enviando fotos...');
+  try{
+    const enviadas = await enviarFotos(files, 'destaques');
+    for(const f of enviadas){ await apiJSON('/api/destaques','POST',{url:f.url, public_id:f.public_id}); }
+    toast(enviadas.length+' foto(s) adicionada(s)!'); carregarDestaques();
+  }catch(e){ toast(e.message||'Erro no upload.',true); }
+  $('dstFile').value='';
+}
+async function excluirDestaque(id){
+  if(!confirm('Remover esta foto do slider?')) return;
+  try{ await api('/api/destaques/'+id,{method:'DELETE'}); carregarDestaques(); }
+  catch(e){ toast('Erro ao remover.',true); }
+}
+</script>
+</body>
+</html>
