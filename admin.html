@@ -4,6 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Admin · Nordeste Multimarcas</title>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0F8040">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Nordeste Admin">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -98,9 +107,27 @@ label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin:0 
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);
   border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:6px}
 @keyframes sp{to{transform:rotate(360deg)}}
+
+/* Banner instalar app (PWA) */
+#pwaBanner{position:fixed;left:12px;right:12px;bottom:12px;z-index:300;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:linear-gradient(135deg,#11151a,#0b0e12);color:#fff;
+  border:1px solid rgba(34,194,101,.4);border-radius:14px;padding:13px 16px;
+  box-shadow:0 12px 34px rgba(0,0,0,.4)}
+#pwaBanner img{width:34px;height:34px;border-radius:8px;flex:none}
+#pwaBanner .txt{flex:1;min-width:160px;font-size:.88rem;line-height:1.35}
+#pwaBanner .txt b{color:#22C265}
 </style>
 </head>
 <body>
+
+<!-- Banner para instalar como app -->
+<div id="pwaBanner" class="hide">
+  <img src="icon-192.png" alt="">
+  <div class="txt" id="pwaText"></div>
+  <button class="btn btn-green btn-sm hide" id="pwaInstall" onclick="instalarApp()">Instalar</button>
+  <button class="btn btn-ghost btn-sm" onclick="document.getElementById('pwaBanner').classList.add('hide')">Agora não</button>
+</div>
 
 <!-- ================= LOGIN ================= -->
 <div id="login" class="card">
@@ -360,6 +387,38 @@ async function excluirDestaque(id){
   if(!confirm('Remover esta foto do slider?')) return;
   try{ await api('/api/destaques/'+id,{method:'DELETE'}); carregarDestaques(); }
   catch(e){ toast('Erro ao remover.',true); }
+}
+
+/* ===================== PWA (instalar como app) ===================== */
+const ehStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+const ehIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+let deferredPrompt = null;
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=> navigator.serviceWorker.register('sw.js').catch(e=>console.warn('SW falhou', e)));
+}
+
+// Android/Chrome: oferece instalação
+window.addEventListener('beforeinstallprompt', (e)=>{
+  e.preventDefault(); deferredPrompt = e;
+  if(!ehStandalone){
+    $('pwaText').innerHTML = 'Instalar o painel como <b>app</b> neste aparelho?';
+    $('pwaInstall').classList.remove('hide');
+    $('pwaBanner').classList.remove('hide');
+  }
+});
+async function instalarApp(){
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null;
+  $('pwaBanner').classList.add('hide');
+}
+window.addEventListener('appinstalled', ()=> $('pwaBanner').classList.add('hide'));
+
+// iPhone/iPad: não tem prompt — mostra instrução do Safari
+if(ehIOS && !ehStandalone){
+  $('pwaText').innerHTML = 'Para instalar no iPhone: toque em <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.';
+  $('pwaInstall').classList.add('hide');
+  $('pwaBanner').classList.remove('hide');
 }
 </script>
 </body>
