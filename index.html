@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nordeste Multimarcas · Seminovos Recife</title>
+<meta name="description" content="Seminovos selecionados em Recife. Veículos revisados, documentação pronta para transferir. Fale no WhatsApp." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --s1:#F8F9FA; --s2:#E8ECEF; --s3:#CDD3D9; --s4:#9EAAB5; --s5:#6B7A86;
+  --s6:#3E4E5A; --s7:#1C2A35;
+  --silver-shine: linear-gradient(145deg, #FFFFFF 0%, #F0F3F5 25%, #D8DDE2 50%, #E8ECEF 75%, #FFFFFF 100%);
+  --metal-surface: linear-gradient(160deg, #F5F7F9 0%, #E2E7EC 30%, #C8D0D8 55%, #DDE2E7 80%, #F0F3F5 100%);
+  --green:#18A558; --green-d:#0F8040; --green-glow:rgba(24,165,88,.35);
+  --green-grad: linear-gradient(135deg, #22C265 0%, #0F8040 100%);
+  --ink:#0D1B26; --muted:#5A6872;
+  --card-bg: rgba(255,255,255,0.72);
+  --card-border: rgba(255,255,255,0.9);
+  --shadow-card: 0 4px 6px rgba(0,0,0,.04), 0 12px 40px rgba(0,0,0,.10), 0 1px 0 rgba(255,255,255,.8) inset;
+  --shadow-raised: 0 20px 60px rgba(0,0,0,.15), 0 4px 12px rgba(0,0,0,.08), 0 1px 0 rgba(255,255,255,.9) inset;
+  --radius:20px;
+  --olx:#6E0AD6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body {
+  font-family:'DM Sans',system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(ellipse 1400px 700px at 20% -10%, rgba(255,255,255,0.9) 0%, transparent 60%),
+    radial-gradient(ellipse 900px 900px at 90% 30%, rgba(200,210,220,0.6) 0%, transparent 55%),
+    radial-gradient(ellipse 600px 400px at 10% 80%, rgba(220,228,235,0.7) 0%, transparent 50%),
+    linear-gradient(160deg, #F0F3F6 0%, #E4E9EE 35%, #D8DFE6 65%, #E8EDF2 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+  overflow-x:hidden;
+  min-height:100vh;
+  position:relative;
+}
+
+/* subtle grid texture */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.4) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+  z-index:0;
+}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+h1,h2,h3,.brandfont{font-family:'Barlow Condensed',sans-serif;letter-spacing:-.01em}
+a{color:inherit;text-decoration:none}
+
+/* ====== HEADER ====== */
+header {
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:saturate(180%) blur(20px) brightness(1.04);
+  background:linear-gradient(180deg,
+    rgba(0, 0, 0, 0.96) 0%,
+    hwb(0 0% 100% / 0.902) 100%);
+  border-bottom:1px solid rgba(255, 255, 255, 0.8);
+  box-shadow:0 1px 0 hsla(144, 77%, 64%, 0.681), 0 4px 20px hwb(150 22% 27% / 0.582);
+}
+
+.nav{display:flex;align-items:center;gap:20px;padding:14px 24px;max-width:1180px;margin:0 auto}
+.logo{height:126px;width:auto;display:block;filter:drop-shadow(0 4px 12px rgba(0,0,0,.15))}
+.nav-links{display:flex;gap:30px;margin-left:16px}
+.nav-links a {
+  color:var(--s5);
+  font-weight:600;
+  font-size:.92rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  transition:color .2s;
+  position:relative;
+}
+.nav-links a::after {
+  content:'';
+  position:absolute;
+  bottom:-2px;left:0;right:100%;
+  height:2px;
+  background:var(--green-grad);
+  border-radius:2px;
+  transition:right .25s ease;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{right:0}
+.nav-spacer{flex:1}
+
+/* ====== BUTTONS ====== */
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  font-weight:700;font-family:'Barlow Condensed',sans-serif;
+  font-size:1rem;letter-spacing:.06em;text-transform:uppercase;
+  border-radius:12px;padding:13px 22px;cursor:pointer;border:none;
+  transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s, background .2s;
+  white-space:nowrap;
+}
+.btn svg{width:18px;height:18px}
+
+.btn-wpp {
+  color:#fff;
+  background:var(--green-grad);
+  box-shadow:0 6px 20px var(--green-glow), 0 1px 0 rgba(255,255,255,.3) inset, 0 -1px 0 rgba(0,0,0,.15) inset;
+}
+.btn-wpp:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 30px var(--green-glow)}
+
+.btn-olx{
+  color:var(--olx);
+  background:rgba(110,10,214,.06);
+  border:1.5px solid rgba(110,10,214,.2);
+}
+.btn-olx:hover{background:var(--olx);color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 10px 24px rgba(110,10,214,.3)}
+
+.btn-ghost {
+  color:var(--ink);
+  background:rgba(255,255,255,.7);
+  border:1.5px solid rgba(160,175,190,.35);
+  box-shadow:0 2px 8px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.9) inset;
+}
+.btn-ghost:hover{background:#fff;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+
+.btn-sm{padding:10px 18px;font-size:.9rem}
+
+/* ====== HERO ====== */
+.hero {
+  position:relative;
+  padding:72px 0 40px;
+  overflow:hidden;
+}
+
+/* 3D hero accent shape */
+.hero-bg-shape {
+  position:absolute;
+  right:-120px;top:-60px;
+  width:700px;height:700px;
+  pointer-events:none;
+  z-index:0;
+}
+.hero-bg-shape::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:radial-gradient(circle at 40% 40%, rgba(24,165,88,.12), rgba(24,165,88,0) 60%);
+  filter:blur(2px);
+}
+.hero-bg-shape::after {
+  content:'';
+  position:absolute;
+  inset:60px;
+  border-radius:50%;
+  background:linear-gradient(135deg, rgba(255,255,255,.5) 0%, rgba(200,215,228,.3) 50%, rgba(255,255,255,.1) 100%);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:
+    0 0 0 1px rgba(160,180,200,.2),
+    0 30px 80px rgba(0,0,0,.08),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.hero-inner{position:relative;z-index:1}
+
+.eyebrow {
+  display:inline-flex;align-items:center;gap:10px;
+  font-weight:600;font-size:.75rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--green-d);
+  background:linear-gradient(135deg, rgba(24,165,88,.08), rgba(15,128,64,.12));
+  border:1px solid rgba(24,165,88,.25);
+  padding:8px 16px;border-radius:999px;
+  box-shadow:0 2px 8px rgba(24,165,88,.1), inset 0 1px 0 rgba(255,255,255,.6);
+}
+.eyebrow::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green-glow)}
+
+.hero h1 {
+  font-size:clamp(2.6rem,6vw,4.4rem);
+  line-height:1.0;
+  font-weight:800;
+  margin:20px 0 16px;
+  letter-spacing:.01em;
+  text-transform:uppercase;
+}
+.hero h1 .met {
+  background:linear-gradient(160deg, #8A9BA8 0%, #C8D5DF 30%, #E8EEF2 50%, #B0BEC8 70%, #6B7A86 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:none;
+}
+.hero h1 .grn {
+  background:var(--green-grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+.hero p{color:var(--muted);font-size:1.08rem;max-width:540px;line-height:1.65}
+.hero-cta{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap}
+
+.trust {
+  display:flex;gap:0;margin-top:40px;flex-wrap:wrap;
+  background:linear-gradient(135deg, rgba(255,255,255,.75) 0%, rgba(240,244,248,.7) 100%);
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:18px;
+  padding:0;
+  overflow:hidden;
+  box-shadow:var(--shadow-card);
+  width:fit-content;
+}
+.trust-item {
+  display:flex;flex-direction:column;
+  padding:20px 32px;
+  position:relative;
+}
+.trust-item+.trust-item::before {
+  content:'';
+  position:absolute;left:0;top:20%;bottom:20%;
+  width:1px;
+  background:linear-gradient(180deg, transparent, rgba(160,175,190,.35), transparent);
+}
+.trust b{font-family:'Barlow Condensed';font-size:1.8rem;font-weight:800;color:var(--ink);letter-spacing:.02em}
+.trust span{font-size:.8rem;color:var(--muted);font-weight:500;margin-top:2px}
+
+/* ====== SECTION HEADING ====== */
+.section-head {
+  display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;
+  margin:56px 0 28px;
+  padding-top:32px;
+  border-top:1px solid rgba(160,175,190,.2);
+}
+.section-head h2{
+  font-size:2rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--ink);
+  margin-right:auto;
+  line-height:1;
+}
+.section-head h2 small{
+  display:block;
+  font-family:'DM Sans';
+  font-weight:500;
+  font-size:.82rem;
+  color:var(--muted);
+  letter-spacing:0;
+  text-transform:none;
+  margin-top:4px;
+}
+
+/* ====== SEARCH BAR ====== */
+.search-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.search {
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:14px;
+  padding:12px 18px;
+  min-width:260px;
+  flex:1;
+  box-shadow:var(--shadow-card);
+  backdrop-filter:blur(8px);
+}
+.search input{
+  border:0;outline:0;
+  font-family:'DM Sans';font-size:.95rem;
+  width:100%;background:transparent;color:var(--ink);
+}
+.search input::placeholder{color:var(--s4)}
+.search svg{width:16px;height:16px;color:var(--s4);flex:none}
+
+select.sort {
+  font-family:'DM Sans';font-weight:600;font-size:.9rem;
+  color:var(--ink);
+  background:rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:14px;
+  padding:13px 20px;
+  cursor:pointer;outline:0;
+  box-shadow:var(--shadow-card);
+  backdrop-filter:blur(8px);
+  appearance:none;
+  -webkit-appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%236B7A86' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 16px center;
+  padding-right:40px;
+}
+
+/* ====== GRID + CARDS ====== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:24px;
+  padding-bottom:70px;
+}
+
+.card {
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow-card);
+  backdrop-filter:blur(12px);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+  display:flex;flex-direction:column;
+  opacity:0;transform:translateY(20px);
+  animation:rise .55s forwards;
+  position:relative;
+}
+.card::before {
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,.9) 40%, rgba(255,255,255,.9) 60%, transparent 100%);
+  z-index:1;
+}
+@keyframes rise{to{opacity:1;transform:none}}
+.card:hover{transform:translateY(-6px) scale(1.01);box-shadow:var(--shadow-raised)}
+.card.sold{opacity:.65}
+
+.ph{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,#E2E8EE,#C8D3DC);overflow:hidden;cursor:pointer}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease}
+.card:hover .ph img{transform:scale(1.07)}
+
+.tag{position:absolute;top:12px;left:12px;display:flex;gap:7px;flex-wrap:wrap;z-index:2}
+.tag span{
+  font-family:'Barlow Condensed';font-weight:700;font-size:.7rem;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 12px;border-radius:8px;
+  background:rgba(13,27,38,.75);color:#fff;
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.15);
+}
+.tag span.leilao{
+  background:linear-gradient(135deg, rgba(24,165,88,.9), rgba(15,128,64,.95));
+  border-color:rgba(255,255,255,.2);
+}
+
+.photos{
+  position:absolute;bottom:12px;right:12px;
+  display:flex;align-items:center;gap:6px;
+  font-size:.74rem;font-weight:700;color:#fff;
+  background:rgba(13,27,38,.65);
+  padding:5px 10px;border-radius:8px;
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.12);
+  z-index:2;
+}
+.photos svg{width:13px;height:13px}
+
+.sold-rib{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(13,27,38,.45);z-index:3}
+.sold-rib b{font-family:'Barlow Condensed';color:#fff;font-weight:800;letter-spacing:.15em;font-size:1.1rem;border:2px solid rgba(255,255,255,.7);padding:10px 22px;border-radius:10px;transform:rotate(-5deg);backdrop-filter:blur(4px)}
+.card.sold .sold-rib{display:flex}
+
+.body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:13px;flex:1}
+.title{font-family:'Barlow Condensed';font-weight:700;font-size:1.15rem;line-height:1.2;letter-spacing:.02em;text-transform:uppercase}
+.price{font-family:'Barlow Condensed';font-weight:800;font-size:1.75rem;letter-spacing:.02em;
+  background:var(--green-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.price small{font-family:'DM Sans';font-weight:500;font-size:.78rem;color:var(--muted);vertical-align:middle;-webkit-text-fill-color:var(--muted);margin-left:7px}
+
+.specs{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.78rem;font-weight:600;color:var(--s6);
+  background:linear-gradient(135deg, rgba(255,255,255,.8), rgba(240,244,248,.6));
+  border:1px solid rgba(255,255,255,.85);
+  padding:6px 12px;border-radius:9px;
+  box-shadow:0 1px 3px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.9);
+}
+.chip svg{width:13px;height:13px;color:var(--s4)}
+
+.desc{font-size:.88rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.55}
+.actions{display:flex;gap:9px;margin-top:auto;flex-wrap:wrap}
+.actions .btn{flex:1;justify-content:center;min-width:120px}
+
+/* ====== MODAL ====== */
+.modal{
+  position:fixed;inset:0;z-index:100;
+  display:none;align-items:center;justify-content:center;padding:20px;
+  background:rgba(10,18,26,.65);
+  backdrop-filter:blur(10px);
+}
+.modal.open{display:flex;animation:fade .25s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+.sheet{
+  background:linear-gradient(145deg, rgba(248,250,252,.97) 0%, rgba(238,243,248,.97) 100%);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:24px;
+  max-width:940px;width:100%;max-height:92vh;overflow:auto;
+  box-shadow:0 40px 100px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.9) inset;
+  position:relative;
+}
+.sheet-img{position:relative;background:#0D1B26;aspect-ratio:16/10}
+.sheet-img img{width:100%;height:100%;object-fit:contain}
+.navb{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:46px;height:46px;border-radius:12px;border:0;cursor:pointer;
+  background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+  transition:transform .2s, background .2s;
+}
+.navb:hover{background:#fff;transform:translateY(-50%) scale(1.08)}
+.navb.prev{left:14px}.navb.next{right:14px}
+.navb svg{width:20px;height:20px;color:var(--ink)}
+.counter{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-size:.76rem;font-weight:700;color:#fff;background:rgba(0,0,0,.5);padding:5px 14px;border-radius:8px;backdrop-filter:blur(4px)}
+.closeb{position:absolute;top:14px;right:14px;z-index:5;width:40px;height:40px;border-radius:10px;border:0;cursor:pointer;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.2);transition:transform .2s}
+.closeb:hover{transform:scale(1.1)}
+.thumbs{display:flex;gap:8px;padding:14px 22px 0;overflow-x:auto}
+.thumbs img{width:68px;height:50px;object-fit:cover;border-radius:10px;cursor:pointer;border:2px solid transparent;flex:none;opacity:.55;transition:.2s}
+.thumbs img.active{border-color:var(--green);opacity:1;box-shadow:0 4px 12px var(--green-glow)}
+.sheet-body{padding:20px 24px 28px;display:flex;flex-direction:column;gap:14px}
+.sheet-body .title{font-size:1.55rem}
+.sheet-body .price{font-size:2.1rem}
+.sheet-desc{font-size:.95rem;color:#4a5660;line-height:1.65}
+
+/* ====== FOOTER ====== */
+footer{
+  border-top:1px solid rgba(160,175,190,.2);
+  background:linear-gradient(180deg, rgba(240,244,248,.6) 0%, rgba(228,234,240,.8) 100%);
+  backdrop-filter:blur(20px);
+  margin-top:20px;
+  position:relative;z-index:1;
+}
+.foot{display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between;padding:48px 0}
+.foot-logo{height:60px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.15))}
+.foot p{color:var(--muted);font-size:.9rem;max-width:300px;margin-top:12px;line-height:1.6}
+.foot h4{
+  font-family:'Barlow Condensed';font-size:.85rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--s4);margin-bottom:14px
+}
+.foot a.line{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:600;font-size:.92rem;margin-bottom:10px;transition:color .2s}
+.foot a.line:hover{color:var(--green-d)}
+.foot svg{width:16px;height:16px;color:var(--green-d)}
+.copy{
+  border-top:1px solid rgba(160,175,190,.15);
+  padding:18px 0;text-align:center;font-size:.8rem;color:var(--s4);
+  background:rgba(255,255,255,.3);
+}
+
+.empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)}
+
+/* ====== FAB ====== */
+.fab{
+  position:fixed;right:22px;bottom:22px;z-index:60;
+  width:60px;height:60px;border-radius:18px;
+  background:var(--green-grad);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 30px var(--green-glow), 0 1px 0 #535252c1 inset;
+  animation:pulse 2.4s infinite;
+  transition:transform .2s;
+}
+.fab:hover{transform:scale(1.1)}
+.fab svg{width:28px;height:28px;color:#fff}
+@keyframes pulse{
+  0%{box-shadow:0 10px 30px var(--green-glow),0 0 0 0 rgba(24,165,88,.4)}
+  70%{box-shadow:0 10px 30px var(--green-glow),0 0 0 18px rgba(24,165,88,0)}
+  100%{box-shadow:0 10px 30px var(--green-glow),0 0 0 0 rgba(24,165,88,0)}
+}
+
+@media(max-width:680px){
+  .nav-links{display:none}
+  .logo{height:46px}
+  .hero{padding:44px 0 24px}
+  .actions .btn{min-width:0}
+  .trust-item{padding:16px 22px}
+  .search{min-width:100%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <img class="logo" src="logo2.png" alt="Nordeste Multimarcas" />
+    <div class="nav-links">
+      <a href="#estoque">Estoque</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <a class="btn btn-wpp btn-sm" id="navWpp" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.87 9.87 0 001.523 5.26l-.999 3.648 3.766-.989zm5.422-6.926c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+      WhatsApp
+    </a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="hero" id="topo">
+    <div class="hero-bg-shape"></div>
+    <div class="hero-inner">
+      <span class="eyebrow">Seminovos selecionados · Recife-PE</span>
+      <h1>Seu próximo Seminovo<br>com <span class="grn">preço baixo</span><br>e <span class="met">papelada pronta</span>.</h1>
+      <p>Veículos revisados, conservados e com documentação pronta para transferir. Atendimento direto, sem enrolação.</p>
+      <div class="hero-cta">
+        <a class="btn btn-wpp" href="#estoque">Ver estoque</a>
+        <a class="btn btn-ghost" id="heroWpp" target="_blank" rel="noopener">Falar no WhatsApp</a>
+      </div>
+      <div class="trust">
+        <div class="trust-item"><b id="tCount">—</b><span>veículos disponíveis</span></div>
+        <div class="trust-item"><b>100%</b><span>documentação ok</span></div>
+        <div class="trust-item"><b>Recife</b><span>PE · atendemos a região</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="estoque">
+    <div class="section-head">
+      <h2>Estoque<small id="subCount">carregando…</small></h2>
+      <div class="search-row" style="margin:0">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <input id="q" type="text" placeholder="Buscar modelo, ano…" />
+        </div>
+        <select class="sort" id="sort">
+          <option value="recent">Mais recentes</option>
+          <option value="price-asc">Menor preço</option>
+          <option value="price-desc">Maior preço</option>
+          <option value="km-asc">Menor KM</option>
+          <option value="year-desc">Mais novos</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+</main>
+
+<!-- modal -->
+<div class="modal" id="modal">
+  <div class="sheet">
+    <button class="closeb" id="closeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <div class="sheet-img">
+      <img id="mImg" src="" alt="" />
+      <button class="navb prev" id="prevBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="navb next" id="nextBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg></button>
+      <span class="counter" id="counter"></span>
+    </div>
+    <div class="thumbs" id="thumbs"></div>
+    <div class="sheet-body">
+      <div class="title" id="mTitle"></div>
+      <div class="price" id="mPrice"></div>
+      <div class="specs" id="mSpecs"></div>
+      <p class="sheet-desc" id="mDesc"></p>
+      <div class="actions" id="mActions"></div>
+    </div>
+  </div>
+</div>
+
+<footer id="contato">
+  <div class="wrap foot">
+    <div>
+      <img class="foot-logo" src="logo2.png" alt="Nordeste Multimarcas" />
+      <p id="sobre">Multimarcas em Recife especializada em SUVs e seminovos com procedência. Compra, venda e troca.</p>
+    </div>
+    <div>
+      <h4>Contato</h4>
+      <a class="line" id="footWpp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>
+        WhatsApp
+      </a>
+      <a class="line" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg>Recife · Pernambuco</a>
+    </div>
+    <div>
+      <h4>Horário</h4>
+      <a class="line" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Seg a Sex · 8h–18h</a>
+      <a class="line" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Sábado · 8h–13h</a>
+    </div>
+  </div>
+  <div class="copy">© <span id="yr"></span> Nordeste Multimarcas · Todos os direitos reservados.</div>
+</footer>
+
+<a class="fab" id="fabWpp" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.87 9.87 0 001.523 5.26l-.999 3.648 3.766-.989zm5.422-6.926c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</a>
+
+<script>
+/* ===================== CONFIG ===================== */
+const CONFIG = {
+  API_URL: "",
+  WHATSAPP: "5581999999999",
+};
+
+const SAMPLE = [
+  {disponivel:true,titulo:"Jeep Renegade Sport T270 1.3 TB 4X2 Flex Aut. 2022",preco:80990,ano:2022,km:35000,cambio:"Automático",combustivel:"Flex",descricao:"SUV automático, completo, muito conservado. Veículo de leilão (média monta), já regularizado e pronto pra rodar. Câmbio automático, central multimídia, bancos em couro, rodas de liga leve, direção elétrica, ar-condicionado, câmera de ré, GPS.",imagens:["https://jmpecasrecife-gif.github.io/jm-pecass/fotos/renegade/1.jpg","https://jmpecasrecife-gif.github.io/jm-pecass/fotos/renegade/2.jpg","https://jmpecasrecife-gif.github.io/jm-pecass/fotos/renegade/3.jpg","https://jmpecasrecife-gif.github.io/jm-pecass/fotos/renegade/4.jpg"],url_olx:"https://pe.olx.com.br/grande-recife/autos-e-pecas/carros-vans-e-utilitarios/jeep-renegade-sport-t270-1-3-tb-4x2-flex-aut-2022-1505221918"},
+  {disponivel:true,titulo:"Jeep Compass 2020",preco:77500,ano:2020,km:72000,cambio:"Automático",combustivel:"Flex",descricao:"Veículo de leilão extremamente novo. Pneus novos, super conservado. Bancos de couro, rodas esportivas, volante multifuncional, central multimídia, Start/Stop, ar-condicionado digital, airbag, chave presencial.",imagens:["https://jmpecasrecife-gif.github.io/jm-pecass/fotos/compass20/1.jpg","https://jmpecasrecife-gif.github.io/jm-pecass/fotos/compass20/2.jpg","https://jmpecasrecife-gif.github.io/jm-pecass/fotos/compass20/3.jpg"],url_olx:"https://pe.olx.com.br/grande-recife/autos-e-pecas/carros-vans-e-utilitarios/jeep-compass-2020-leia-todo-o-anuncio-1375620023"},
+  {disponivel:true,titulo:"Jeep Compass Longitude T270 1.3 TB 4X2 Flex AUT 2023",preco:110990,ano:2023,km:95000,cambio:"Automático",combustivel:"Flex",descricao:"SUV impecável, muito novo, confortável e completo! Veículo de leilão, regularizado e pronto para transferir. Teto solar panorâmico, bancos em couro, multimídia, câmbio automático, ar digital, rodas de liga leve, chave presencial.",imagens:["https://jmpecasrecife-gif.github.io/jm-pecass/fotos/compass23/1.jpg","https://jmpecasrecife-gif.github.io/jm-pecass/fotos/compass23/2.jpg","https://jmpecasrecife-gif.github.io/jm-pecass/fotos/compass23/3.jpg"],url_olx:"https://pe.olx.com.br/grande-recife/autos-e-pecas/carros-vans-e-utilitarios/jeep-compass-long-t270-1-3-tb-4x2-flex-aut-2023-1504310141"},
+  {disponivel:true,titulo:"Hyundai Creta Action 1.6 16V Flex AUT 2025",preco:85000,ano:2025,km:52000,cambio:"Automático",combustivel:"Flex",descricao:"22 mil abaixo da FIPE! IPVA 2026 pago. SUV completo, econômico e com apenas 52.000 km rodados. Veículo de leilão (média monta), já regularizado, documento pronto para transferir.",imagens:["https://jmpecasrecife-gif.github.io/jm-pecass/fotos/creta/1.jpg","https://jmpecasrecife-gif.github.io/jm-pecass/fotos/creta/2.jpg","https://jmpecasrecife-gif.github.io/jm-pecass/fotos/creta/3.jpg"],url_olx:"https://pe.olx.com.br/grande-recife/autos-e-pecas/carros-vans-e-utilitarios/hyundai-creta-action-1-6-16v-flex-aut-2025-1483062113"},
+];
+
+const BRL = n => n==null?'':Number(n).toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+const KM = n => n==null?'':Number(n).toLocaleString('pt-BR')+' km';
+const PLACEHOLDER = "data:image/svg+xml;utf8,"+encodeURIComponent(
+  `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23E8EEF3'/><stop offset='1' stop-color='%23C8D3DC'/></linearGradient></defs><rect width='800' height='600' fill='url(%23g)'/><text x='400' y='305' font-family='sans-serif' font-size='28' fill='%236B7A86' text-anchor='middle' font-weight='bold'>NORDESTE MULTIMARCAS</text></svg>`);
+
+const ICON = {
+  cal:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`,
+  km:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 14l3-3"/><path d="M3.5 18a9 9 0 1117 0"/></svg>`,
+  gear:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16M6 8h6a2 2 0 012 2v8M18 4v16"/></svg>`,
+  fuel:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 20V6a2 2 0 00-2-2H5a2 2 0 00-2 2v14M3 20h12M14 9h2a2 2 0 012 2v5a1.5 1.5 0 003 0V8l-3-3"/></svg>`,
+};
+const ICON_CAM = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg>`;
+
+const waLink = (titulo, preco) => {
+  const msg = `Olá! Tenho interesse no ${titulo}${preco?` (${BRL(preco)})`:''}. Ainda está disponível?`;
+  return `https://wa.me/${CONFIG.WHATSAPP}?text=${encodeURIComponent(msg)}`;
+};
+
+let CARS = [], view = [], modalCar = null, modalIdx = 0;
+
+function specChips(c){
+  return `<div class="specs">
+    <span class="chip">${ICON.cal}${c.ano||'—'}</span>
+    <span class="chip">${ICON.km}${KM(c.km)}</span>
+    <span class="chip">${ICON.gear}${c.cambio||'—'}</span>
+    <span class="chip">${ICON.fuel}${c.combustivel||'—'}</span>
+  </div>`;
+}
+
+function actionsHTML(c){
+  let html = `<a class="btn btn-wpp btn-sm" href="${waLink(c.titulo,c.preco)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>WhatsApp</a>`;
+  if(c.url_olx){
+    html += `<a class="btn btn-olx btn-sm" href="${c.url_olx}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Ver no OLX</a>`;
+  }
+  return html;
+}
+
+function cardHTML(c, i){
+  const img = (c.imagens&&c.imagens[0])||PLACEHOLDER;
+  const sold = c.disponivel===false;
+  return `<article class="card ${sold?'sold':''}" style="animation-delay:${i*60}ms" data-i="${i}">
+    <div class="ph" onclick="openModal(${i})">
+      <img src="${img}" alt="${c.titulo}" loading="lazy" onerror="this.onerror=null;this.src='${PLACEHOLDER}'"/>
+      <div class="tag"><span class="leilao">Leilão</span>${sold?'':'<span>Media Monta</span>'}${sold?'':'<span>IPVA 2026 Quitado</span>'}</div>
+      ${c.imagens&&c.imagens.length>1?`<div class="photos">${ICON_CAM}${c.imagens.length}</div>`:''}
+      <div class="sold-rib"><b>VENDIDO</b></div>
+    </div>
+    <div class="body">
+      <div class="title">${c.titulo}</div>
+      <div class="price">${BRL(c.preco)}<small>à vista</small></div>
+      ${specChips(c)}
+      <p class="desc">${c.descricao||''}</p>
+      <div class="actions">${sold?'<span class="btn btn-ghost btn-sm" style="flex:1;justify-content:center;cursor:default">Vendido</span>':actionsHTML(c)}</div>
+    </div>
+  </article>`;
+}
+
+function applyFilters(){
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const s = document.getElementById('sort').value;
+  view = CARS.filter(c => !q || (c.titulo||'').toLowerCase().includes(q) || String(c.ano).includes(q));
+  const av = x => x.disponivel===false?1:0;
+  view.sort((a,b)=>{
+    if(av(a)!==av(b)) return av(a)-av(b);
+    if(s==='price-asc') return a.preco-b.preco;
+    if(s==='price-desc') return b.preco-a.preco;
+    if(s==='km-asc') return a.km-b.km;
+    if(s==='year-desc') return b.ano-a.ano;
+    return 0;
+  });
+  const grid = document.getElementById('grid');
+  grid.innerHTML = view.length ? view.map(cardHTML).join('') : `<div class="empty">Nenhum veículo encontrado.</div>`;
+  const n = CARS.filter(c=>c.disponivel!==false).length;
+  document.getElementById('subCount').textContent = `${n} ${n===1?'veículo disponível':'veículos disponíveis'}`;
+  document.getElementById('tCount').textContent = n;
+}
+
+function openModal(i){
+  modalCar = view[i]; modalIdx = 0;
+  document.getElementById('mTitle').textContent = modalCar.titulo;
+  document.getElementById('mPrice').innerHTML = BRL(modalCar.preco);
+  document.getElementById('mSpecs').innerHTML = specChips(modalCar).replace('<div class="specs">','').replace(/<\/div>$/,'');
+  document.getElementById('mDesc').textContent = modalCar.descricao||'';
+  document.getElementById('mActions').innerHTML = (modalCar.disponivel===false)?'<span class="btn btn-ghost">Vendido</span>':actionsHTML(modalCar);
+  const thumbs = document.getElementById('thumbs');
+  const imgs = (modalCar.imagens&&modalCar.imagens.length)?modalCar.imagens:[PLACEHOLDER];
+  thumbs.innerHTML = imgs.map((u,k)=>`<img src="${u}" onerror="this.src='${PLACEHOLDER}'" onclick="setImg(${k})" class="${k===0?'active':''}"/>`).join('');
+  setImg(0);
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function setImg(k){
+  const imgs = (modalCar.imagens&&modalCar.imagens.length)?modalCar.imagens:[PLACEHOLDER];
+  modalIdx = (k+imgs.length)%imgs.length;
+  const el = document.getElementById('mImg');
+  el.src = imgs[modalIdx]; el.onerror=()=>{el.src=PLACEHOLDER};
+  document.getElementById('counter').textContent = `${modalIdx+1} / ${imgs.length}`;
+  [...document.getElementById('thumbs').children].forEach((t,j)=>t.classList.toggle('active',j===modalIdx));
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow=''}
+document.getElementById('closeBtn').onclick=closeModal;
+document.getElementById('prevBtn').onclick=()=>setImg(modalIdx-1);
+document.getElementById('nextBtn').onclick=()=>setImg(modalIdx+1);
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+document.addEventListener('keydown',e=>{if(!document.getElementById('modal').classList.contains('open'))return;
+  if(e.key==='Escape')closeModal();if(e.key==='ArrowLeft')setImg(modalIdx-1);if(e.key==='ArrowRight')setImg(modalIdx+1)});
+
+async function load(){
+  let data = null;
+  if(CONFIG.API_URL){
+    try{
+      const r = await fetch(CONFIG.API_URL.replace(/\/$/,'')+'/api/carros');
+      if(r.ok) data = await r.json();
+    }catch(e){ console.warn('API offline, usando dados locais', e); }
+  }
+  CARS = (Array.isArray(data)&&data.length)?data:SAMPLE;
+  applyFilters();
+}
+document.getElementById('q').addEventListener('input',applyFilters);
+document.getElementById('sort').addEventListener('change',applyFilters);
+const genericWa = waLink('um veículo do estoque','');
+['navWpp','heroWpp','footWpp','fabWpp'].forEach(id=>document.getElementById(id).href=genericWa);
+document.getElementById('yr').textContent=new Date().getFullYear();
+load();
+</script>
+</body>
+</html>
