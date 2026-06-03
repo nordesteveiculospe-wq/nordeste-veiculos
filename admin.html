@@ -98,6 +98,35 @@ label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin:0 
 .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
 .section-title h2{font-size:1.3rem}
 
+/* TAGS / ETIQUETAS */
+.tag-check{cursor:pointer;user-select:none}
+.tag-check input{display:none}
+.tag-pill{
+  display:inline-block;padding:6px 13px;border-radius:8px;font-size:.78rem;font-weight:700;
+  font-family:'Barlow Condensed';letter-spacing:.05em;text-transform:uppercase;
+  border:2px solid transparent;transition:.2s;opacity:.45;
+}
+.tag-check input:checked + .tag-pill{opacity:1;transform:scale(1.04)}
+.tag-pill.leilao{background:rgba(24,165,88,.15);color:var(--green-d);border-color:var(--green)}
+.tag-pill.media{background:rgba(255,140,0,.12);color:#B85E00;border-color:#E07A10}
+.tag-pill.ipva{background:rgba(60,120,255,.1);color:#1A40B0;border-color:#3C78FF}
+.tag-pill.oferta{background:rgba(220,50,50,.1);color:#B01A1A;border-color:#D64545}
+.tag-pill.revisado{background:rgba(24,165,88,.1);color:#0F6030;border-color:#18A558}
+.tag-pill.unico{background:rgba(140,60,220,.1);color:#5A1E9A;border-color:#8C3CDC}
+
+/* TOGGLE DESTAQUE */
+.destaque-toggle{
+  position:relative;display:inline-block;width:46px;height:26px;flex:none;
+  background:#CBD5E0;border-radius:999px;cursor:pointer;transition:.25s;border:2px solid rgba(0,0,0,.08);
+}
+.destaque-toggle::after{
+  content:'';position:absolute;top:2px;left:2px;
+  width:18px;height:18px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 4px rgba(0,0,0,.2);transition:.25s;
+}
+.destaque-toggle.on{background:var(--green-grad);border-color:var(--green-d)}
+.destaque-toggle.on::after{left:22px}
+
 /* TOAST */
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);
   background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:.9rem;
@@ -178,6 +207,24 @@ label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin:0 
       </div>
       <div class="row"><label>Descrição</label><textarea id="f_descricao" rows="3" placeholder="Detalhes do veículo..."></textarea></div>
       <div class="row"><label>Link do OLX (opcional)</label><input id="f_olx" placeholder="https://..." /></div>
+      <div class="row">
+        <label>Etiquetas exibidas no card (escolha as que se aplicam)</label>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:6px">
+          <label class="tag-check"><input type="checkbox" id="tag_leilao" value="leilao"><span class="tag-pill leilao">🔖 Leilão</span></label>
+          <label class="tag-check"><input type="checkbox" id="tag_media" value="media-monta"><span class="tag-pill media">🔩 Média Monta</span></label>
+          <label class="tag-check"><input type="checkbox" id="tag_ipva" value="ipva"><span class="tag-pill ipva">📄 IPVA 2026 Quitado</span></label>
+          <label class="tag-check"><input type="checkbox" id="tag_oferta" value="oferta"><span class="tag-pill oferta">🏷️ Oferta</span></label>
+          <label class="tag-check"><input type="checkbox" id="tag_revisado" value="revisado"><span class="tag-pill revisado">✅ Revisado</span></label>
+          <label class="tag-check"><input type="checkbox" id="tag_unico" value="unico-dono"><span class="tag-pill unico">👤 Único Dono</span></label>
+        </div>
+      </div>
+      <div class="row">
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none">
+          <span class="destaque-toggle" id="destaqueToggle" onclick="toggleDestaque()"></span>
+          <span id="destaqueTxt" style="font-weight:600;font-size:.9rem;color:var(--muted)">Exibir no Destaque (slider principal)</span>
+        </label>
+        <p class="muted" style="margin-top:4px;font-size:.78rem">Quando ativado, a primeira foto do veículo aparece no slider da página inicial com nome, preço e etiquetas.</p>
+      </div>
       <div class="row"><label><input type="checkbox" id="f_disponivel" checked style="width:auto;margin-right:6px;vertical-align:-1px">Disponível (desmarque para "Vendido")</label></div>
       <div class="row">
         <label>Fotos (pode selecionar várias)</label>
@@ -304,6 +351,10 @@ function novoCarro(){
   $('f_km').value=''; $('f_cambio').value='Automático'; $('f_combustivel').value='Flex';
   $('f_descricao').value=''; $('f_olx').value=''; $('f_disponivel').checked=true;
   $('f_fotos').value=''; novasFotos=[]; renderThumbs();
+  // reset tags
+  ['tag_leilao','tag_media','tag_ipva','tag_oferta','tag_revisado','tag_unico'].forEach(id=>$(id).checked=false);
+  // reset destaque
+  _destaqueAtivo = false; atualizarToggleDestaque();
   $('carForm').classList.remove('hide'); window.scrollTo({top:0,behavior:'smooth'});
 }
 function editarCarro(id){
@@ -315,6 +366,16 @@ function editarCarro(id){
   $('f_fotos').value='';
   novasFotos = (c.imagens||[]).map((u,i)=>({url:u, public_id:(c.public_ids&&c.public_ids[i])||''}));
   renderThumbs();
+  // carregar tags
+  const tags = c.tags || [];
+  $('tag_leilao').checked  = tags.includes('leilao');
+  $('tag_media').checked   = tags.includes('media-monta');
+  $('tag_ipva').checked    = tags.includes('ipva');
+  $('tag_oferta').checked  = tags.includes('oferta');
+  $('tag_revisado').checked= tags.includes('revisado');
+  $('tag_unico').checked   = tags.includes('unico-dono');
+  // carregar destaque
+  _destaqueAtivo = c.no_destaque === true; atualizarToggleDestaque();
   $('carForm').classList.remove('hide'); window.scrollTo({top:0,behavior:'smooth'});
 }
 function fecharForm(){ $('carForm').classList.add('hide'); }
@@ -322,6 +383,28 @@ function renderThumbs(){
   $('f_thumbs').innerHTML = novasFotos.map((f,i)=>`<div class="thumb"><img src="${f.url}"><button onclick="removerFoto(${i})">×</button></div>`).join('');
 }
 function removerFoto(i){ novasFotos.splice(i,1); renderThumbs(); }
+
+/* ===================== TAGS + DESTAQUE ===================== */
+let _destaqueAtivo = false;
+function atualizarToggleDestaque(){
+  const el = $('destaqueToggle');
+  el.classList.toggle('on', _destaqueAtivo);
+  $('destaqueTxt').textContent = _destaqueAtivo
+    ? '✨ Exibindo no Destaque (slider principal)'
+    : 'Exibir no Destaque (slider principal)';
+  $('destaqueTxt').style.color = _destaqueAtivo ? 'var(--green-d)' : 'var(--muted)';
+}
+function toggleDestaque(){ _destaqueAtivo = !_destaqueAtivo; atualizarToggleDestaque(); }
+function lerTags(){
+  const t = [];
+  if($('tag_leilao').checked)   t.push('leilao');
+  if($('tag_media').checked)    t.push('media-monta');
+  if($('tag_ipva').checked)     t.push('ipva');
+  if($('tag_oferta').checked)   t.push('oferta');
+  if($('tag_revisado').checked) t.push('revisado');
+  if($('tag_unico').checked)    t.push('unico-dono');
+  return t;
+}
 
 async function salvarCarro(){
   const titulo=$('f_titulo').value.trim(), preco=+$('f_preco').value, ano=+$('f_ano').value;
@@ -342,6 +425,8 @@ async function salvarCarro(){
       disponivel:$('f_disponivel').checked,
       imagens: novasFotos.map(f=>f.url),
       public_ids: novasFotos.map(f=>f.public_id),
+      tags: lerTags(),
+      no_destaque: _destaqueAtivo,
     };
     const id = $('f_id').value;
     if(id) await apiJSON('/api/carros/'+id,'PUT',carro);
