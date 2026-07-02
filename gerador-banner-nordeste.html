@@ -587,16 +587,16 @@ function render(){
 
   // ---- model name ----
   let y = imgAreaY+imgH+95;
-  chromeText(ctx, modelo, 44, y, `900 ${Math.min(96, 560/(modelo.length||1)*2.2)}px Arial`, {align:'left', baseline:'alphabetic'});
-  // fallback fixed large size but shrink if too long
+  // calcula o maior tamanho de fonte que caiba na largura disponível
   ctx.save();
-  ctx.font='900 100px Arial';
   let fsize = 100;
+  ctx.font = `900 ${fsize}px Arial`;
   while(ctx.measureText(modelo).width > W-90 && fsize>40){
-    fsize -= 4; ctx.font = `900 ${fsize}px Arial`;
+    fsize -= 4;
+    ctx.font = `900 ${fsize}px Arial`;
   }
   ctx.restore();
-  // redraw properly sized
+  // desenha uma única vez, já no tamanho correto
   chromeText(ctx, modelo, 44, y, `900 ${fsize}px Arial`, {align:'left', baseline:'alphabetic'});
 
   y += 40;
