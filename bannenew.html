@@ -13,7 +13,7 @@
 
     <style>
         :root {
-            --primary: #39ff14; 
+            --primary: #39ff14; /* Verde Neon */
             --primary-dark: #2ce60d;
             --primary-glow: rgba(57, 255, 20, 0.3);
             --text-on-primary: #000000;
@@ -27,31 +27,47 @@
         }
 
         body {
-            margin: 0; font-family: var(--font-main); background-color: var(--bg-body);
-            color: var(--text-light); display: flex; height: 100vh; overflow: hidden;
-            -webkit-font-smoothing: antialiased; transition: background-color 0.5s;
+            margin: 0;
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
+            color: var(--text-light);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.5s;
         }
 
         /* PAINEL ESQUERDO */
         .controls {
-            width: 420px; min-width: 420px; background: var(--bg-panel); padding: 30px 25px;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.6); overflow-y: auto; z-index: 10;
-            border-right: 1px solid var(--border-color); transition: transform 0.4s ease, opacity 0.4s ease;
+            width: 420px;
+            min-width: 420px;
+            background: var(--bg-panel);
+            padding: 30px 25px;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.6);
+            overflow-y: auto;
+            z-index: 10;
+            border-right: 1px solid var(--border-color);
+            transition: transform 0.4s ease, opacity 0.4s ease;
         }
 
         .controls::-webkit-scrollbar { width: 6px; }
         .controls::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
 
         .brand-header {
-            margin-bottom: 25px; border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .brand-header h2 { margin: 0; font-weight: 900; font-size: 1.4em; }
 
         .form-group { margin-bottom: 15px; }
         .form-group label {
-            display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.8em; color: var(--text-muted); text-transform: uppercase;
+            display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.8em; color: var(--text-muted); text-transform: uppercase;
         }
         .input-modern {
             width: 100%; padding: 12px 15px; background: #2a2a32; border: 1px solid var(--border-color);
@@ -68,32 +84,25 @@
         }
         .btn-action:hover { background: var(--primary-dark); transform: translateY(-2px); }
 
-        .btn-download { background: transparent; color: var(--primary); border: 2px solid var(--primary); margin-top: 10px; }
+        .btn-download {
+            background: transparent; color: var(--primary); border: 2px solid var(--primary);
+            margin-top: 10px;
+        }
         .btn-download:hover { background: var(--primary-glow); }
-        .btn-record { background: #fff; color: #000; margin-top: 10px; }
-
-        /* TAGS RÁPIDAS (NOVO) */
-        .quick-tags {
-            display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;
-        }
-        .q-tag {
-            background: #333; color: #ccc; padding: 6px 12px; border-radius: 20px;
-            font-size: 0.7em; font-weight: 600; cursor: pointer; border: 1px solid #444; 
-            transition: all 0.2s ease; text-transform: uppercase; user-select: none;
-        }
-        .q-tag:hover { background: #444; color: #fff; }
-        .q-tag.active {
-            background: var(--primary); color: var(--text-on-primary);
-            border-color: var(--primary); box-shadow: 0 0 8px var(--primary-glow);
+        
+        .btn-record {
+            background: #fff; color: #000; margin-top: 10px;
         }
 
         /* AREA DO BANNER DIREITO */
         .preview-area {
             flex: 1; display: flex; justify-content: center; align-items: center;
             background: radial-gradient(circle at center, #25252d 0%, #0a0a0c 100%);
-            padding: 30px; overflow-y: auto; transition: all 0.5s;
+            padding: 30px; overflow-y: auto;
+            transition: all 0.5s;
         }
 
+        /* O BANNER (1080x1350 px = Aspect Ratio 4:5) */
         .banner {
             width: 100%; max-width: 450px; aspect-ratio: 4 / 5;
             background-color: #111; position: relative; overflow: hidden;
@@ -102,65 +111,135 @@
             transition: transform 0.5s ease;
         }
 
-        .img-container { flex: 1; position: relative; background-color: #222; }
-        .bg-slider {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center; transition: background-image 0.5s ease-in-out;
+        /* PARTE SUPERIOR: FOTO DO CARRO */
+        .img-container {
+            flex: 1; 
+            position: relative;
+            background-color: #222;
         }
 
+        .bg-slider {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        /* PARTE INFERIOR: DADOS DO CARRO */
         .data-panel {
-            height: 48%; background: linear-gradient(180deg, #1e1e24 0%, #0a0a0c 100%);
-            border-radius: 30px 30px 0 0; margin-top: -30px; position: relative; z-index: 10;
+            height: 48%; 
+            background: linear-gradient(180deg, #1e1e24 0%, #0a0a0c 100%);
+            border-radius: 30px 30px 0 0; 
+            margin-top: -30px; 
+            position: relative; z-index: 10;
             display: flex; flex-direction: column; align-items: center;
             padding: 20px; box-sizing: border-box; text-align: center;
-            border-top: 1px solid var(--primary-glow); box-shadow: 0 -10px 20px rgba(0,0,0,0.5);
+            border-top: 1px solid var(--primary-glow);
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.5);
         }
 
         .brand-logo {
-            margin-top: -45px; background: #111; padding: 8px 20px; border-radius: 12px;
-            max-width: 130px; max-height: 40px; object-fit: contain;
-            border: 1px solid var(--primary-glow); box-shadow: 0 5px 15px rgba(0,0,0,0.8); margin-bottom: 15px;
+            margin-top: -45px; 
+            background: #111;
+            padding: 8px 20px;
+            border-radius: 12px;
+            max-width: 130px;
+            max-height: 40px;
+            object-fit: contain;
+            border: 1px solid var(--primary-glow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+            margin-bottom: 15px;
         }
 
         .b-title {
-            font-family: var(--font-display); font-size: 2.1em; font-weight: 700; margin: 0; text-transform: uppercase;
-            line-height: 1.1; color: transparent; -webkit-text-stroke: 1px var(--primary); text-shadow: 0 0 15px var(--primary-glow);
+            font-family: var(--font-display);
+            font-size: 2.1em;
+            font-weight: 700;
+            margin: 0;
+            text-transform: uppercase;
+            line-height: 1.1;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--primary); 
+            text-shadow: 0 0 15px var(--primary-glow);
         }
 
-        .b-subtitle { font-size: 0.9em; color: #fff; margin: 5px 0 15px 0; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .b-subtitle {
+            font-size: 0.9em; color: #fff; margin: 5px 0 15px 0; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+        }
 
         .b-features {
             list-style: none; padding: 0; margin: 0 0 15px 0;
             display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
         }
+
         .b-features li {
-            background: var(--primary); color: #000; padding: 4px 12px; border-radius: 50px; font-size: 0.7em; font-weight: 800; text-transform: uppercase;
+            background: var(--primary); color: #000;
+            padding: 4px 12px; border-radius: 50px; font-size: 0.7em; font-weight: 800; text-transform: uppercase;
         }
 
         .b-fipe { font-size: 0.8em; color: #aaa; margin: 0 0 5px 0; }
         .b-fipe span { text-decoration: line-through; }
 
         .b-price-box {
-            background: var(--primary); color: #000; padding: 5px 25px; border-radius: 12px; display: inline-block;
+            background: var(--primary); color: #000; padding: 5px 25px;
+            border-radius: 12px; display: inline-block;
             box-shadow: 0 10px 20px var(--primary-glow);
         }
+
         .b-price { font-size: 2.5em; font-weight: 900; margin: 0; line-height: 1; letter-spacing: -1px; }
+
         .b-footer { font-size: 0.75em; color: #ccc; margin-top: 15px; }
+
         .hidden { display: none !important; }
-        .exit-msg { position: absolute; top: 20px; color: #555; font-size: 0.9em; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100; }
 
-        body.is-recording .controls { transform: translateX(-100%); position: absolute; opacity: 0; pointer-events: none; }
-        body.is-recording .preview-area { background: #000; padding: 0; width: 100vw; height: 100vh; cursor: pointer; }
-        body.is-recording .banner { transform: scale(1.05); }
-        body.is-recording .exit-msg { opacity: 1; animation: fadeOutMsg 4s forwards; }
+        /* MENSAGEM DE SAÍDA DO MODO GRAVAÇÃO */
+        .exit-msg {
+            position: absolute;
+            top: 20px;
+            color: #555;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 100;
+        }
 
-        @keyframes fadeOutMsg { 0% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+        /* --- MODO GRAVAÇÃO (TELA CHEIA) --- */
+        body.is-recording .controls {
+            transform: translateX(-100%); /* Esconde o painel para a esquerda */
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body.is-recording .preview-area {
+            background: #000; /* Fundo totalmente preto */
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            cursor: pointer; /* Indica que pode clicar para sair */
+        }
+
+        body.is-recording .banner {
+            transform: scale(1.05); /* Dá um leve zoom para destacar mais */
+        }
+        
+        body.is-recording .exit-msg {
+            opacity: 1;
+            animation: fadeOutMsg 4s forwards; /* A mensagem some após 4 segundos para a tela ficar limpa */
+        }
+
+        @keyframes fadeOutMsg {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
 
         @media (max-width: 768px) {
             body:not(.is-recording) { flex-direction: column; overflow-y: auto; height: auto; }
             .controls { width: 100%; min-width: 100%; border-right: none; box-sizing: border-box; position: relative;}
             .preview-area { padding: 15px; min-height: 120vw; }
             .b-title { font-size: 1.8em; }
+            
             body.is-recording .controls { display: none; }
             body.is-recording { flex-direction: row; overflow: hidden; height: 100vh; }
             body.is-recording .banner { transform: scale(1); max-width: 90vw; }
@@ -198,21 +277,8 @@
         </div>
 
         <div class="form-group">
-            <label>Tags Rápidas (Clique para adicionar)</label>
-            <div class="quick-tags">
-                <span class="q-tag">IPVA Quitado</span>
-                <span class="q-tag">Automático</span>
-                <span class="q-tag">Bancos em Couro</span>
-                <span class="q-tag">Central Multimídia</span>
-                <span class="q-tag">Único Dono</span>
-                <span class="q-tag">Leilão Média Monta (Consta)</span>
-                <span class="q-tag">Sem Retoques</span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Opcionais Personalizados</label>
-            <textarea id="inp-features" class="input-modern">Teto Solar&#10;Bancos em Couro</textarea>
+            <label>Opcionais (Um por linha)</label>
+            <textarea id="inp-features" class="input-modern">Teto Solar&#10;Bancos em Couro&#10;Único Dono</textarea>
         </div>
 
         <div class="form-group flex-row">
@@ -230,7 +296,7 @@
 
         <button type="button" class="btn-action btn-download" id="btn-download-img">📥 Baixar Post Estático (Imagem)</button>
         <button type="button" class="btn-action btn-record" id="btn-record-mode">🎬 Modo Gravação (Reels)</button>
-        <p style="font-size: 0.7em; color: #888; text-align: center; margin-top: 8px;">No Modo Gravação, a tela ficará preta focando no banner. Use o gravador nativo do seu celular/PC.</p>
+        <p style="font-size: 0.7em; color: #888; text-align: center; margin-top: 8px;">No Modo Gravação, a tela ficará preta focando no banner. Use o gravador nativo do seu celular/PC para gravar a animação com máxima qualidade.</p>
     </div>
 
     <div class="preview-area" id="preview-area">
@@ -250,6 +316,7 @@
                 <ul class="b-features" id="out-features">
                     <li>Teto Solar</li>
                     <li>Bancos em Couro</li>
+                    <li>Único Dono</li>
                 </ul>
 
                 <p class="b-fipe" id="out-fipe-container">Tabela FIPE: <span id="out-fipe">R$ 155.000</span></p>
@@ -329,43 +396,7 @@
             document.getElementById('out-fipe-container').classList.toggle('hidden', val === '');
         });
 
-        // LÓGICA DAS TAGS RÁPIDAS
-        const quickTags = document.querySelectorAll('.q-tag');
-        const inpFeatures = document.getElementById('inp-features');
-
-        // Atualiza a cor dos botões caso o usuário digite/delete o texto manualmente
-        const updateQuickTagsState = () => {
-            const currentLines = inpFeatures.value.split('\n').map(l => l.trim().toUpperCase());
-            quickTags.forEach(tag => {
-                if (currentLines.includes(tag.innerText.trim().toUpperCase())) {
-                    tag.classList.add('active');
-                } else {
-                    tag.classList.remove('active');
-                }
-            });
-        };
-
-        // Quando o usuário clica num botão de Tag Rápida
-        quickTags.forEach(tag => {
-            tag.addEventListener('click', () => {
-                let currentLines = inpFeatures.value.split('\n').map(l => l.trim()).filter(l => l !== '');
-                const tagText = tag.innerText;
-                
-                // Se já existe, remove. Se não, adiciona.
-                if (currentLines.some(l => l.toUpperCase() === tagText.toUpperCase())) {
-                    currentLines = currentLines.filter(l => l.toUpperCase() !== tagText.toUpperCase());
-                } else {
-                    currentLines.push(tagText);
-                }
-                
-                inpFeatures.value = currentLines.join('\n');
-                inpFeatures.dispatchEvent(new Event('input')); // Atualiza o banner visualmente
-                updateQuickTagsState(); // Atualiza as cores dos botões
-            });
-        });
-
-        // Evento principal para a caixa de texto dos opcionais
-        inpFeatures.addEventListener('input', (e) => {
+        document.getElementById('inp-features').addEventListener('input', (e) => {
             const outFeatures = document.getElementById('out-features');
             outFeatures.innerHTML = '';
             e.target.value.split('\n').filter(l => l.trim() !== '').forEach(line => {
@@ -373,11 +404,7 @@
                 li.innerText = line;
                 outFeatures.appendChild(li);
             });
-            updateQuickTagsState(); // Sincroniza botões sempre que digitar
         });
-
-        // Força atualização inicial ao carregar a página
-        inpFeatures.dispatchEvent(new Event('input'));
 
         // LÓGICA DE FOTOS E ANIMAÇÃO
         let sliderInterval;
@@ -414,9 +441,15 @@
         const btnRecordMode = document.getElementById('btn-record-mode');
         const previewArea = document.getElementById('preview-area');
         
-        btnRecordMode.addEventListener('click', () => { document.body.classList.add('is-recording'); });
+        btnRecordMode.addEventListener('click', () => {
+            document.body.classList.add('is-recording');
+        });
+
+        // Clique em qualquer lugar da área preta para sair do modo gravação
         previewArea.addEventListener('click', () => {
-            if(document.body.classList.contains('is-recording')) { document.body.classList.remove('is-recording'); }
+            if(document.body.classList.contains('is-recording')) {
+                document.body.classList.remove('is-recording');
+            }
         });
 
         // LÓGICA PARA BAIXAR IMAGEM ESTÁTICA
@@ -427,7 +460,10 @@
             btn.innerText = "Gerando Imagem...";
 
             html2canvas(banner, { 
-                scale: 2, useCORS: true, allowTaint: true, backgroundColor: "#111"
+                scale: 2, 
+                useCORS: true, 
+                allowTaint: true,
+                backgroundColor: "#111"
             }).then(canvas => {
                 try {
                     const image = canvas.toDataURL("image/jpeg", 0.9);
