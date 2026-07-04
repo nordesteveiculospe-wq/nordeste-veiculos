@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gerador Premium Pro - Nordeste Multimarcas</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis de Cores Neon Modernas */
+        :root {
+            --primary: #39ff14; /* Verde Neon */
+            --primary-dark: #2ce60d;
+            --primary-glow: rgba(57, 255, 20, 0.4);
+            --text-on-primary: #000000;
+            --bg-body: #101012; /* Fundo mais escuro e profundo */
+            --bg-panel: #1e1e24;
+            --text-light: #f8f8f8;
+            --text-muted: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(10, 10, 12, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --font-main: 'Montserrat', sans-serif;
+            --font-display: 'Oswald', sans-serif; /* Para títulos impactantes */
+        }
+
+        /* Variações de Temas com Brilho Neon Ricos */
+        body.theme-red { --primary: #ff2a2a; --primary-dark: #e61919; --primary-glow: rgba(255, 42, 42, 0.4); --text-on-primary: #fff; }
+        body.theme-blue { --primary: #00e1ff; --primary-dark: #00b8d4; --primary-glow: rgba(0, 225, 255, 0.4); --text-on-primary: #000; }
+        body.theme-gold { --primary: #ffcf33; --primary-dark: #e6b800; --primary-glow: rgba(255, 207, 51, 0.4); --text-on-primary: #000; }
+        body.theme-white { --primary: #ffffff; --primary-dark: #e0e0e0; --primary-glow: rgba(255, 255, 255, 0.4); --text-on-primary: #000; }
+
+        body {
+            margin: 0;
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
+            color: var(--text-light);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- PAINEL DE CONTROLE (UI Moderna e Clean) --- */
+        .controls {
+            width: 420px;
+            min-width: 420px;
+            background: var(--bg-panel);
+            padding: 30px 25px;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.6);
+            overflow-y: auto;
+            z-index: 10;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .controls::-webkit-scrollbar { width: 6px; }
+        .controls::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+
+        .brand-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .brand-header h2 {
+            margin: 0;
+            font-weight: 900;
+            font-size: 1.5em;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-header h2::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--primary);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-modern {
+            width: 100%;
+            padding: 14px 16px;
+            background: #2a2a32;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 0.95em;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .input-modern:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+            background: #32323a;
+        }
+
+        textarea.input-modern { resize: vertical; min-height: 90px; }
+
+        .flex-row { display: flex; gap: 10px; }
+
+        .btn-action {
+            background: var(--primary);
+            color: var(--text-on-primary);
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 800;
+            font-family: inherit;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-action:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn-action:disabled {
+            background: #444; color: #777;
+            cursor: not-allowed; transform: none;
+        }
+
+        /* Toggle Switch Moderno */
+        .switch-container {
+            display: flex; align-items: center; gap: 12px;
+            background: #2a2a32; padding: 12px 16px;
+            border-radius: 12px; border: 1px solid var(--border-color);
+        }
+
+        .switch-container span { font-weight: 700; font-size: 0.9em; }
+
+        /* --- ÁREA DE PREVIEW E BANNER (O Designer Principal) --- */
+        .preview-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #25252d 0%, #0a0a0c 100%);
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        /* Proporção 4:5 Instagram com borda de luxo */
+        .banner {
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 4 / 5;
+            background-color: #111;
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px; /* Borda bem arredondada */
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.08); /* Borda sutil */
+        }
+
+        .bg-slider {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.8s ease-in-out, transform 8s linear;
+        }
+
+        /* Textura sutil de "galpão industrial" desfocada no fundo */
+        .banner::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/pinstriped-suit.png'); /* Textura sutil */
+            opacity: 0.05; /* Muito sutil */
+            z-index: 1;
+        }
+
+        /* Vignette escuro e profundo */
+        .banner-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.85) 100%);
+            z-index: 2;
+        }
+
+        .brand-logo {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            max-width: 140px;
+            max-height: 50px;
+            z-index: 5;
+            object-fit: contain;
+            filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.7));
+        }
+
+        /* Painel Glassmorphism Redesenhado e Profundo (inspirado na referência) */
+        .glass-panel {
+            position: absolute;
+            bottom: 20px; 
+            left: 20px; 
+            right: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            z-index: 5;
+        }
+
+        /* Tipografia de Título Maciça e Arrojada (com brilho neon) */
+        .b-title {
+            font-family: var(--font-display);
+            font-size: 1.8em;
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: -1px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--primary-glow); /* Brilho neon sutil */
+            transform: skewX(-5deg); /* Toque arrojado da referência */
+        }
+
+        .b-subtitle {
+            font-size: 0.9em;
+            color: #e0e0e0;
+            margin: 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Pílulas/Tags com contorno neon brilhante */
+        .b-features {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .b-features li {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--primary); /* Contorno neon brilhante */
+            box-shadow: 0 0 10px var(--primary-glow); /* Brilho neon */
+            padding: 6px 14px;
+            border-radius: 50px; /* Estilo pílula */
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        /* Bloco de Preço Maciço e Emoldurado com Brilho */
+        .price-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 5px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .fipe-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .b-fipe-label {
+            font-size: 0.7em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .b-fipe-value {
+            font-size: 0.95em;
+            color: #fff;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        /* Caixa de Preço Destaque com Brilho Neon Profundo */
+        .b-price-box {
+            background: var(--primary);
+            color: var(--text-on-primary);
+            padding: 10px 18px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px var(--primary); /* Brilho neon */
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .b-price {
+            font-size: 2em;
+            font-weight: 900;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: -1.5px;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Responsivo Mobile */
+        @media (max-width: 768px) {
+            body { flex-direction: column; overflow-y: auto; height: auto; }
+            .controls {
+                width: 100%; min-width: 100%; border-right: none;
+                border-bottom: 1px solid var(--border-color); box-sizing: border-box;
+            }
+            .preview-area { padding: 20px; height: auto; min-height: 110vw; box-sizing: border-box; }
+            .banner { border-radius: 20px; }
+            .glass-panel { padding: 18px; bottom: 15px; left: 15px; right: 15px; }
+            .b-title { font-size: 1.6em; }
+            .b-price { font-size: 1.6em; }
+        }
+    </style>
+</head>
+<body class="theme-neon">
+
+    <div class="controls">
+        <div class="brand-header">
+            <h2>Nordeste Multimarcas</h2>
+        </div>
+
+        <div class="form-group">
+            <label>Tema de Cores</label>
+            <select id="inp-theme" class="input-modern">
+                <option value="theme-neon">Verde Neon (Moderno)</option>
+                <option value="theme-red">Vermelho (Agressivo)</option>
+                <option value="theme-blue">Azul (Tecnológico)</option>
+                <option value="theme-gold">Dourado (Luxo)</option>
+                <option value="theme-white">Branco (Minimalista)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Busca Placa (Integração Backend)</label>
+            <div class="flex-row">
+                <input type="text" id="inp-placa" class="input-modern" placeholder="Ex: ABC1D23" style="text-transform: uppercase;">
+                <button type="button" class="btn-action" id="btn-buscar">Buscar</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Exibir Marca</label>
+            <div class="switch-container">
+                <input type="checkbox" id="inp-logo" checked style="width: 20px; height: 20px; accent-color: var(--primary);">
+                <span>Mostrar logo Nordeste Multimarcas</span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Fotos (Adicione várias para animação)</label>
+            <input type="file" id="inp-images" class="input-modern" accept="image/*" multiple>
+        </div>
+
+        <div class="form-group flex-row">
+            <div style="flex: 1.5;">
+                <label>Modelo / Versão</label>
+                <input type="text" id="inp-title" class="input-modern" placeholder="Ex: Honda Civic Touring" value="Honda Civic Touring">
+            </div>
+            <div style="flex: 1;">
+                <label>Ano • Motor • Câmbio</label>
+                <input type="text" id="inp-subtitle" class="input-modern" placeholder="Ex: 2021 • 1.5 Turbo" value="2021 • 1.5 Turbo • CVT">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Tags Opcionais (Uma por linha)</label>
+            <textarea id="inp-features" class="input-modern" placeholder="Teto Solar&#10;Couro Clarity">Teto Solar&#10;Bancos em Couro&#10;Multimídia Premium 10"</textarea>
+        </div>
+
+        <div class="form-group flex-row">
+            <div style="flex: 1;">
+                <label>Tabela FIPE</label>
+                <input type="text" id="inp-fipe" class="input-modern" placeholder="Ex: R$ 155.000" value="R$ 155.000">
+            </div>
+            <div style="flex: 1.5;">
+                <label>Preço Loja</label>
+                <input type="text" id="inp-price" class="input-modern" placeholder="Ex: R$ 149.900" value="R$ 149.900">
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-area">
+        <div class="banner" id="banner">
+            <div class="bg-slider" id="bg-slider"></div>
+            <div class="banner-overlay"></div>
+            
+            <img src="https://www.nordestemultimarcas.com.br/logo2.png" class="brand-logo" id="out-logo" alt="Nordeste Multimarcas">
+            
+            <div class="glass-panel">
+                <h1 class="b-title" id="out-title">Honda Civic Touring</h1>
+                <p class="b-subtitle" id="out-subtitle">2021 • 1.5 Turbo • CVT</p>
+                
+                <ul class="b-features" id="out-features">
+                    <li>Teto Solar</li>
+                    <li>Bancos em Couro</li>
+                    <li>Multimídia Premium 10"</li>
+                </ul>
+
+                <div class="price-wrapper">
+                    <div class="fipe-block" id="out-fipe-container">
+                        <span class="b-fipe-label">Tabela FIPE</span>
+                        <span class="b-fipe-value" id="out-fipe">R$ 155.000</span>
+                    </div>
+                    <div class="b-price-box">
+                        <p class="b-price" id="out-price">R$ 149.900</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mudar tema com atualização instantânea de cores
+        document.getElementById('inp-theme').addEventListener('change', function() {
+            document.body.className = this.value;
+        });
+
+        // Mostrar / Ocultar Logo
+        const inpLogo = document.getElementById('inp-logo');
+        const outLogo = document.getElementById('out-logo');
+        inpLogo.addEventListener('change', function() {
+            outLogo.classList.toggle('hidden', !this.checked);
+        });
+
+        // Lógica de API Real do Backend da JM
+        document.getElementById('btn-buscar').addEventListener('click', async function() {
+            const placa = document.getElementById('inp-placa').value.trim();
+            if(!placa) {
+                alert("Por favor, digite a placa.");
+                return;
+            }
+
+            const btn = this;
+            const textOriginal = btn.innerText;
+            btn.innerText = "Buscando...";
+            btn.disabled = true;
+
+            try {
+                // Rota que você configurará no seu backend
+                const URL_API = `https://www.jmpecasrecife.com.br/fipe/api?placa=${placa}`;
+                
+                const response = await fetch(URL_API);
+                if(!response.ok) throw new Error("Erro de servidor");
+                
+                const data = await response.json();
+
+                if(data.modelo) document.getElementById('inp-title').value = data.modelo;
+                if(data.detalhes) document.getElementById('inp-subtitle').value = data.detalhes; 
+                if(data.fipe) document.getElementById('inp-fipe').value = data.fipe;
+
+                // Força atualização do banner
+                document.getElementById('inp-title').dispatchEvent(new Event('input'));
+                document.getElementById('inp-subtitle').dispatchEvent(new Event('input'));
+                document.getElementById('inp-fipe').dispatchEvent(new Event('input'));
+
+            } catch (error) {
+                console.error(error);
+                alert("Busca não realizada. Verifique a URL da API e a configuração do backend.");
+            } finally {
+                btn.innerText = textOriginal;
+                btn.disabled = false;
+            }
+        });
+
+        // Bindings de Texto Dinâmicos
+        const bindText = (inputId, outputId) => {
+            const input = document.getElementById(inputId);
+            const output = document.getElementById(outputId);
+            input.addEventListener('input', () => {
+                output.innerText = input.value.trim();
+                output.classList.toggle('hidden', input.value.trim() === '');
+            });
+        };
+
+        bindText('inp-title', 'out-title');
+        bindText('inp-subtitle', 'out-subtitle');
+        bindText('inp-price', 'out-price');
+
+        const inFipe = document.getElementById('inp-fipe');
+        const outFipe = document.getElementById('out-fipe');
+        const outFipeContainer = document.getElementById('out-fipe-container');
+        
+        inFipe.addEventListener('input', () => {
+            outFipe.innerText = inFipe.value.trim();
+            outFipeContainer.classList.toggle('hidden', inFipe.value.trim() === '');
+        });
+
+        const inFeatures = document.getElementById('inp-features');
+        const outFeatures = document.getElementById('out-features');
+
+        inFeatures.addEventListener('input', () => {
+            const lines = inFeatures.value.split('\n').filter(line => line.trim() !== '');
+            outFeatures.innerHTML = '';
+            outFeatures.classList.toggle('hidden', lines.length === 0);
+            lines.forEach(line => {
+                const li = document.createElement('li');
+                li.innerText = line;
+                outFeatures.appendChild(li);
+            });
+        });
+
+        // Lógica de Slideshow de Imagens Moderno com transição
+        const inpImages = document.getElementById('inp-images');
+        const bgSlider = document.getElementById('bg-slider');
+        let imagesArray = [];
+        let currentImageIndex = 0;
+        let sliderInterval;
+
+        inpImages.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            imagesArray = [];
+            clearInterval(sliderInterval);
+
+            if(files.length === 0) {
+                bgSlider.style.backgroundImage = 'none';
+                return;
+            }
+
+            let loadedCount = 0;
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    imagesArray.push(event.target.result);
+                    loadedCount++;
+                    if(loadedCount === files.length) {
+                        bgSlider.style.backgroundImage = `url(${imagesArray[0]})`;
+                        
+                        if(imagesArray.length > 1) {
+                            currentImageIndex = 0;
+                            sliderInterval = setInterval(() => {
+                                bgSlider.style.opacity = '0'; // Esconde para transição
+                                currentImageIndex = (currentImageIndex + 1) % imagesArray.length;
+                                
+                                setTimeout(() => {
+                                    bgSlider.style.backgroundImage = `url(${imagesArray[currentImageIndex]})`;
+                                    bgSlider.style.opacity = '1'; // Mostra
+                                }, 300); // Pequeno atraso para o CSS processar a transição de opacidade
+                                
+                            }, 3000); // Troca a cada 3 segundos
+                        }
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
+</body>
+</html>
